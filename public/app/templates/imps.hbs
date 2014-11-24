@@ -1,17 +1,29 @@
-<section>
-  <header><h2>Teilnehmer</h2></header>
-  <ul>
-  {{#each}}
-    {{partial "imp"}}
-  {{/each}}
-  </ul>
+<section class="row">
+  <div class="small-12 columns">
+    <header><h2>Teilnehmer</h2></header>
+    <ul class="imps">
+      {{#each}}
+        {{partial "imp"}}
+      {{else}}
+        <li class="empty"><em>Noch keine Teilnehmer vorhanden. Sei der Erste!</em></li>
+      {{/each}}
+    </ul>
+  </div>
 </section>
 
-<section>
-  <form>
-    {{input name="name" value=impName placeholder="Name"}}
-    {{input name="email" value=impMail placeholder="E-Mail"}}
-    {{view "select" name="calendar" prompt="Kalender" value=impCalendar content=calendars}}
-    <button {{action "add-imp"}}>Mitmachen</button>
-  </form>
-</section>
+<form>
+  <div class="row collapse prefix-round postfix-round">
+    <div class="small-3 columns">
+      {{view "select" name="calendar" prompt="Kalender" value=impCalendar content=calendars class="prefix"}}
+    </div>
+    <div class="small-3 columns">
+      {{input name="name" value=impName placeholder="Name"}}
+    </div>
+    <div class="small-3 columns">
+      {{input name="email" value=impMail placeholder="E-Mail"}}
+    </div>
+    <div class="small-3 columns">
+      <button {{action "add-imp"}} class="button postfix">Mitmachen</button>
+    </div>
+  </div>
+</form>
