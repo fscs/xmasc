@@ -1,11 +1,18 @@
 `import Ember from 'ember'`
 
+CALENDARS = ["Lego Star Wars", "Lego City"]
+
 get = Ember.get
 setProperties = Ember.setProperties
 
-filterBy = Ember.computed.filterBy
-sort = Ember.computed.sort
-alias = Ember.computed.alias
+computed = Ember.computed
+filterBy = computed.filterBy
+sort = computed.sort
+alias = computed.alias
+
+restFor = (impsKey) ->
+  lengthKey = "#{impsKey}.length"
+  computed lengthKey, -> 24 - @get lengthKey
 
 ImpsController = Ember.ArrayController.extend
   actions:
@@ -20,7 +27,7 @@ ImpsController = Ember.ArrayController.extend
   emailError: alias "errors.email.firstObject"
   calendarError: alias "errors.calendar.firstObject"
 
-  calendars: ["Lego Star Wars", "Lego City"]
+  calendars: CALENDARS
 
   createImp: (name, mail, calendar) ->
     imp = @store.createRecord "imp", name: name, email: mail, calendar: calendar
@@ -40,5 +47,11 @@ ImpsController = Ember.ArrayController.extend
 
   sorting: ["id:desc"]
   imps: sort "filteredImps", "sorting"
+
+  starWarsImps: filterBy "content", "calendar", CALENDARS[0]
+  restStarWars: restFor "starWarsImps"
+
+  cityImps: filterBy "content", "calendar", CALENDARS[1]
+  restCity: restFor "cityImps"
 
 `export default ImpsController`
