@@ -1,5 +1,6 @@
 `import Ember from 'ember'`
 
+get = Ember.get
 setProperties = Ember.setProperties
 
 ImpsController = Ember.ArrayController.extend
@@ -12,27 +13,30 @@ ImpsController = Ember.ArrayController.extend
   impCalendar: null
 
   nameError: false
-  mailError: false
+  emailError: false
   calendarError: false
 
   calendars: ["Lego Star Wars", "Lego City"]
 
   createImp: (name, mail, calendar) ->
     @resetErrors()
-    if name? and mail? and calendar?
-      imp = @store.createRecord "imp", name: name, email: mail, calendar: calendar
-      imp.save()
-    else
-      setProperties @,
-        nameError: unless name? then "Erforderlich"
-        mailError: unless mail? then "Erforderlich"
-        calendarError: unless calendar? then "Erforderlich"
+    imp = @store.createRecord "imp", name: name, email: mail, calendar: calendar
+    imp.save().then (=> @resetForm()), (response) =>
+      errors = response.responseJSON.errors
+      for error of errors
+        @set "#{error}Error", get errors, "#{error}.firstObject"
 
   resetErrors: ->
     setProperties @,
       nameError: false
-      mailError: false
+      emailError: false
       calendarError: false
+
+  resetForm: ->
+    setProperties @,
+      impName: null
+      impMail: null
+      impCalendar: null
 
 
 `export default ImpsController`
