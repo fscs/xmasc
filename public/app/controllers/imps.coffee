@@ -3,6 +3,9 @@
 get = Ember.get
 setProperties = Ember.setProperties
 
+filterBy = Ember.computed.filterBy
+alias = Ember.computed.alias
+
 ImpsController = Ember.ArrayController.extend
   actions:
     "add-imp": ->
@@ -12,28 +15,26 @@ ImpsController = Ember.ArrayController.extend
   impMail: null
   impCalendar: null
 
-  nameError: false
-  emailError: false
-  calendarError: false
+  nameError: alias "errors.name.firstObject"
+  emailError: alias "errors.email.firstObject"
+  calendarError: alias "errors.calendar.firstObject"
 
   calendars: ["Lego Star Wars", "Lego City"]
 
   createImp: (name, mail, calendar) ->
-    @resetErrors()
     imp = @store.createRecord "imp", name: name, email: mail, calendar: calendar
-    imp.save().then (=> @resetForm())
+    imp.save().then (=> @reset()), (response) =>
+      @store.unloadRecord imp
+      @set "errors", response.errors
 
-  resetErrors: ->
-    setProperties @,
-      nameError: false
-      emailError: false
-      calendarError: false
-
-  resetForm: ->
+  reset: ->
     setProperties @,
       impName: null
       impMail: null
       impCalendar: null
 
+    @set "errors", {}
+
+  imps: filterBy "content", "isDirty", false
 
 `export default ImpsController`
