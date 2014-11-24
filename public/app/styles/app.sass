@@ -21,6 +21,9 @@
   border-top-left-radius: 1000px
   border-bottom-left-radius: 1000px
 
+#impForm
+  margin: 2em auto 0
+
 .imps
   list-style-type: none
   margin: 0
@@ -39,6 +42,8 @@
 
     color: #333
 
+    cursor: pointer
+
     small
       color: #666
 
@@ -50,17 +55,29 @@
       $bg-color: lighten($bg-color2, 10%)
       @include linear-top-bottom-gradient($bg-color, $bg-color2)
 
+      &:hover
+        @include linear-top-bottom-gradient(lighten($bg-color, 10%), lighten($bg-color2, 10%))
+
     &:nth-child(2n)
       $bg-color2: #66f
       $bg-color: lighten($bg-color2, 10%)
       @include linear-top-bottom-gradient($bg-color, $bg-color2)
+
+      &:hover
+        @include linear-top-bottom-gradient(lighten($bg-color, 10%), lighten($bg-color2, 10%))
 
     &:nth-child(3n)
       $bg-color2: #6f6
       $bg-color: lighten($bg-color2, 10%)
       @include linear-top-bottom-gradient($bg-color, $bg-color2)
 
+      &:hover
+        @include linear-top-bottom-gradient(lighten($bg-color, 10%), lighten($bg-color2, 10%))
+
     &:nth-child(4n)
       $bg-color2: #f6f
       $bg-color: lighten($bg-color2, 10%)
       @include linear-top-bottom-gradient($bg-color, $bg-color2)
+
+      &:hover
+        @include linear-top-bottom-gradient(lighten($bg-color, 10%), lighten($bg-color2, 10%))

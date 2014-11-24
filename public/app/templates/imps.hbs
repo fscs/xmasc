@@ -1,16 +1,4 @@
-<section class="row">
-  <div class="small-12 columns">
-    <ul class="imps">
-      {{#each}}
-        {{partial "imp"}}
-      {{else}}
-        <li class="empty"><em>Noch keine Teilnehmer vorhanden. Sei der Erste!</em></li>
-      {{/each}}
-    </ul>
-  </div>
-</section>
-
-<form>
+<form id="impForm">
   <div class="row collapse prefix-round postfix-round">
     <div class="small-3 columns">
       {{view "select" name="calendar" prompt="Kalender" value=impCalendar content=calendars classNameBindings=":prefix calendarError:error"}}
@@ -25,13 +13,25 @@
       {{/if}}
     </div>
     <div class="small-3 columns">
-      {{input name="email" value=impMail placeholder="E-Mail" class=mailError:error}}
-      {{#if mailError}}
-        <small class="error">{{mailError}}</small>
+      {{input name="email" value=impMail placeholder="E-Mail" class=emailError:error}}
+      {{#if emailError}}
+        <small class="error">{{emailError}}</small>
       {{/if}}
     </div>
-    <div class="small-3 columns">
+    <div class="small-2 columns">
       <button {{action "add-imp"}} class="button postfix">Mitmachen</button>
     </div>
   </div>
 </form>
+
+<section class="row">
+  <div class="small-11 columns">
+    <ul class="imps">
+      {{#each}}
+        {{partial "imp"}}
+      {{else}}
+        <li class="empty"><em>Noch keine Teilnehmer vorhanden. Sei der Erste!</em></li>
+      {{/each}}
+    </ul>
+  </div>
+</section>
