@@ -28,6 +28,9 @@
   <div class="small-11 columns">
     <ul class="imps">
       {{#each}}
+        {{#each errors.messages}}
+          {{message}}
+        {{/each}}
         {{partial "imp"}}
       {{else}}
         <li class="empty"><em>Noch keine Teilnehmer vorhanden. Sei der Erste!</em></li>
