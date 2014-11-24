@@ -20,5 +20,5 @@ post '/api/imps' do
 
   imp = Imp.create params["imp"]
   imp.save
-  imp.to_json
+  { imp: imp }.to_json
 end
