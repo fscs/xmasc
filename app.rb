@@ -8,6 +8,7 @@ get '/' do
   File.read 'public/dist/index.html'
 end
 
-get '/imps' do
-  Imp.all
+get '/api/imps' do
+  content_type :json
+  { imps: Imp.all }.to_json
 end
