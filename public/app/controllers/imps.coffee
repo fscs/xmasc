@@ -4,6 +4,7 @@ get = Ember.get
 setProperties = Ember.setProperties
 
 filterBy = Ember.computed.filterBy
+sort = Ember.computed.sort
 alias = Ember.computed.alias
 
 ImpsController = Ember.ArrayController.extend
@@ -35,6 +36,9 @@ ImpsController = Ember.ArrayController.extend
 
     @set "errors", {}
 
-  imps: filterBy "content", "isDirty", false
+  filteredImps: filterBy "content", "isDirty", false
+
+  sorting: ["id:desc"]
+  imps: sort "filteredImps", "sorting"
 
 `export default ImpsController`
