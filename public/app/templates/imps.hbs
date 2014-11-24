@@ -1,0 +1,11 @@
+<ul>
+{{#each}}
+  <li>{{name}}</li>
+{{/each}}
+</ul>
+
+<form>
+  {{input name="name" value=impName placeholder="Wichtel Name"}}
+  {{input name="email" value=impMail placeholder="Wichtel E-Mail"}}
+  <button {{action "add-imp"}}>Mitmachen</button>
+</form>
