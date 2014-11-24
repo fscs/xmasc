@@ -21,10 +21,7 @@ ImpsController = Ember.ArrayController.extend
   createImp: (name, mail, calendar) ->
     @resetErrors()
     imp = @store.createRecord "imp", name: name, email: mail, calendar: calendar
-    imp.save().then (=> @resetForm()), (response) =>
-      errors = response.responseJSON.errors
-      for error of errors
-        @set "#{error}Error", get errors, "#{error}.firstObject"
+    imp.save().then (=> @resetForm())
 
   resetErrors: ->
     setProperties @,
