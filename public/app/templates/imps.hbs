@@ -13,13 +13,22 @@
 <form>
   <div class="row collapse prefix-round postfix-round">
     <div class="small-3 columns">
-      {{view "select" name="calendar" prompt="Kalender" value=impCalendar content=calendars class="prefix"}}
+      {{view "select" name="calendar" prompt="Kalender" value=impCalendar content=calendars classNameBindings=":prefix calendarError:error"}}
+      {{#if calendarError}}
+        <small class="error">{{calendarError}}</small>
+      {{/if}}
     </div>
     <div class="small-3 columns">
-      {{input name="name" value=impName placeholder="Name"}}
+      {{input name="name" value=impName placeholder="Name" class=nameError:error}}
+      {{#if nameError}}
+        <small class="error">{{nameError}}</small>
+      {{/if}}
     </div>
     <div class="small-3 columns">
-      {{input name="email" value=impMail placeholder="E-Mail"}}
+      {{input name="email" value=impMail placeholder="E-Mail" class=mailError:error}}
+      {{#if mailError}}
+        <small class="error">{{mailError}}</small>
+      {{/if}}
     </div>
     <div class="small-3 columns">
       <button {{action "add-imp"}} class="button postfix">Mitmachen</button>
