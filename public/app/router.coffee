@@ -5,6 +5,6 @@ Router = Ember.Router.extend
   location: config.locationType
 
 Router.map ->
-  @resource "imps"
+  @resource "imps", path: "/"
 
 `export default Router`
