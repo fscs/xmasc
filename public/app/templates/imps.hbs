@@ -1,11 +1,17 @@
-<ul>
-{{#each}}
-  <li>{{name}}</li>
-{{/each}}
-</ul>
+<section>
+  <header><h2>Teilnehmer</h2></header>
+  <ul>
+  {{#each}}
+    {{partial "imp"}}
+  {{/each}}
+  </ul>
+</section>
 
-<form>
-  {{input name="name" value=impName placeholder="Wichtel Name"}}
-  {{input name="email" value=impMail placeholder="Wichtel E-Mail"}}
-  <button {{action "add-imp"}}>Mitmachen</button>
-</form>
+<section>
+  <form>
+    {{input name="name" value=impName placeholder="Name"}}
+    {{input name="email" value=impMail placeholder="E-Mail"}}
+    {{view "select" name="calendar" prompt="Kalender" value=impCalendar content=calendars}}
+    <button {{action "add-imp"}}>Mitmachen</button>
+  </form>
+</section>

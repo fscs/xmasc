@@ -11,11 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124090421) do
+ActiveRecord::Schema.define(version: 20141124102311) do
 
   create_table "imps", force: true do |t|
     t.string "name"
     t.string "email"
+    t.string "calendar"
   end
 
   add_index "imps", ["email"], name: "index_imps_on_email", unique: true
