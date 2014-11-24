@@ -22,7 +22,7 @@ post '/api/imps' do
   if imp.save
     { imp: imp }.to_json
   else
-    status 400
+    status 422
     { errors: imp.errors }.to_json
   end
 end

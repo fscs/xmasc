@@ -1,5 +1,5 @@
 `import DS from 'ember-data'`
 
-ApplicationAdapter = DS.RESTAdapter.extend host: "/api"
+ApplicationAdapter = DS.ActiveModelAdapter.extend host: "/api"
 
 `export default ApplicationAdapter`
