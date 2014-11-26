@@ -1,5 +1,4 @@
 require 'yaml'
-require 'pry'
 
 config = YAML.load_file('config/database.yml')
 
