@@ -1,5 +1,8 @@
 require 'yaml'
 
+configure :development, :production do
+  set :public_folder, Proc.new { File.join root, "public/dist" }
+end
 
 configure :development do
   config = YAML.load_file('config/database.yml')
@@ -8,7 +11,6 @@ configure :development do
     database: config["development"]["database"]
   )
 
-  set :public_folder, Proc.new { File.join root, "public/dist" }
 end
 
 configure :production do
