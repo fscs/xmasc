@@ -1,8 +1,8 @@
 require 'yaml'
 
-config = YAML.load_file('config/database.yml')
 
 configure :development do
+  config = YAML.load_file('config/database.yml')
   ActiveRecord::Base.establish_connection(
     adapter: config["development"]["adapter"],
     database: config["development"]["database"]
