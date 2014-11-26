@@ -18,7 +18,7 @@ post '/api/imps' do
 
   params = JSON.parse request.body.read
 
-  imp = Imp.create params["imp"]
+  imp = Imp.new params["imp"]
   if imp.save
     { imp: imp }.to_json
   else
