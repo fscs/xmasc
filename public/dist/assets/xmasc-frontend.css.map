@@ -2,8 +2,8 @@
 	"version": 3,
 	"file": "xmasc-frontend.css",
 	"sources": [
-		"../../tree_merger-tmp_dest_dir-gZsGyjWL.tmp/app/styles/app.sass",
-		"../../tree_merger-tmp_dest_dir-gZsGyjWL.tmp/app/styles/_settings.scss",
+		"../../tree_merger-tmp_dest_dir-8ee6m3Dq.tmp/app/styles/app.sass",
+		"../../tree_merger-tmp_dest_dir-8ee6m3Dq.tmp/app/styles/_settings.scss",
 		"../../../bower_components/foundation/scss/foundation/components/_grid.scss",
 		"../../../bower_components/foundation/scss/foundation/components/_buttons.scss",
 		"../../../bower_components/foundation/scss/foundation/components/_forms.scss",
