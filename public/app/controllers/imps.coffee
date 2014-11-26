@@ -51,10 +51,10 @@ ImpsController = Ember.ArrayController.extend
 
   imps: sort "filteredImps", compareImpDesc
 
-  starWarsImps: filterBy "content", "calendar", CALENDARS[0]
+  starWarsImps: filterBy "filteredImps", "calendar", CALENDARS[0]
   restStarWars: restFor "starWarsImps"
 
-  cityImps: filterBy "content", "calendar", CALENDARS[1]
+  cityImps: filterBy "filteredImps", "calendar", CALENDARS[1]
   restCity: restFor "cityImps"
 
 `export default ImpsController`
