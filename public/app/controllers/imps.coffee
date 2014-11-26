@@ -10,9 +10,13 @@ filterBy = computed.filterBy
 sort = computed.sort
 alias = computed.alias
 
+compare = Ember.compare
+
 restFor = (impsKey) ->
   lengthKey = "#{impsKey}.length"
   computed lengthKey, -> 24 - @get lengthKey
+
+compareImpDesc = (imp1, imp2) -> compare +get(imp2, "id"), +get(imp1, "id")
 
 ImpsController = Ember.ArrayController.extend
   actions:
@@ -45,8 +49,7 @@ ImpsController = Ember.ArrayController.extend
 
   filteredImps: filterBy "content", "isDirty", false
 
-  sorting: ["id:desc"]
-  imps: sort "filteredImps", "sorting"
+  imps: sort "filteredImps", compareImpDesc
 
   starWarsImps: filterBy "content", "calendar", CALENDARS[0]
   restStarWars: restFor "starWarsImps"
