@@ -1,7 +1,7 @@
 require 'yaml'
 require 'pry'
 
-config = YAML.load_file('database.yml')
+config = YAML.load_file('config/database.yml')
 
 configure :development do
   ActiveRecord::Base.establish_connection(
