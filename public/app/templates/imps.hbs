@@ -1,4 +1,5 @@
-<form id="impForm">
+<header id="xmascHeader"></header>
+<form id="impForm" {{bind-attr class="view.magellan"}}>
   <div class="row collapse prefix-round postfix-round">
     <div class="small-3 columns">
       {{view "select" name="calendar" prompt="Kalender" value=impCalendar content=calendars classNameBindings=":prefix calendarError:error"}}

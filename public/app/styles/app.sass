@@ -22,8 +22,26 @@
   border-top-left-radius: 1000px
   border-bottom-left-radius: 1000px
 
+#xmascHeader
+  height: 383px
+  background: url(../img/header.jpg) no-repeat center center
+
 #impForm
-  margin: 2em auto 0
+  margin: 20px auto
+  padding: 1rem 0 0
+  width: 100%
+  text-align: center
+  background-color: white
+
+  &.magellan
+    margin: 0 auto
+    position: fixed
+    z-index: 99
+    top: 0
+    border-bottom: 1px solid #999
+    box-shadow: 0 0 15px 2px #999
+    transition: 2000ms ease-in-out background-color
+    background-color: #ffd
 
 .imps
   list-style-type: none
