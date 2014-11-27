@@ -42,8 +42,6 @@ eval("//# sourceURL=vendor/ember-cli/loader.js");
 
 ;eval("define(\"xmasc-frontend/tests/xmasc-frontend/tests/test-helper.jshint\", \n  [],\n  function() {\n    \"use strict\";\n    module(\'JSHint - xmasc-frontend/tests\');\n    test(\'xmasc-frontend/tests/test-helper.js should pass jshint\', function() { \n      ok(true, \'xmasc-frontend/tests/test-helper.js should pass jshint.\'); \n    });\n  });//# sourceURL=xmasc-frontend/tests/xmasc-frontend/tests/test-helper.jshint.js");
 
-;eval("define(\"xmasc-frontend/views/imps\", \n  [\"ember\",\"exports\"],\n  function(__dependency1__, __exports__) {\n    \"use strict\";\n    var Ember = __dependency1__[\"default\"];\n    var ImpsView;\n\n    ImpsView = Ember.View.extend({\n      didInsertElement: function() {\n        return this.$().foundation(\"magellan\");\n      }\n    });\n\n    __exports__[\"default\"] = ImpsView;\n  });//# sourceURL=xmasc-frontend/views/imps.js");
-
 /* jshint ignore:start */
 
 define('xmasc-frontend/config/environment', ['ember'], function(Ember) {
