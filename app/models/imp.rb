@@ -8,7 +8,7 @@ class Imp < ActiveRecord::Base
       errors.add :calendar, "ist schon ausgebucht!"
     end
 
-    if self.count >= 48
+    if self.class.count >= 48
       errors.add :calendar, "in beiden Kalendern sind alle Türchen vergeben"
     end
   end
