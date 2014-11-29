@@ -36,9 +36,9 @@ configure :production do
     :address        => ENV['POSTMARK_SMTP_SERVER'],
     :user_name      => ENV['POSTMARK_API_KEY'],
     :password       => ENV['POSTMARK_API_KEY'],
-    :domain         => 'yourapp.heroku.com',
-    :authentication => :cram_md5,
-    :enable_starttls_auto => true
+    :domain         => 'xmasc.herokuapp.com',
+    :authentication => :plain,
+    :enable_starttls_auto => false
   }
   ActionMailer::Base.delivery_method = :smtp
 end
