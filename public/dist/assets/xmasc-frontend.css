@@ -2418,34 +2418,34 @@ input.error, textarea.error, select.error {
 label.error {
   color: #f04124; }
 
-/* line 17, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+/* line 17, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
 .postfix-round .postfix {
   border-top-right-radius: 1000px;
   border-bottom-right-radius: 1000px; }
 
-/* line 21, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+/* line 21, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
 .prefix-round .prefix {
   border-top-left-radius: 1000px;
   border-bottom-left-radius: 1000px; }
 
-/* line 25, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+/* line 25, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
 #xmascHeader {
   height: 383px;
   background: url(../img/header.jpg) no-repeat center center; }
 
-/* line 29, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+/* line 29, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
 .magellan-wrapper {
   height: 80px;
   margin: 20px 0 0; }
 
-/* line 33, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+/* line 33, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
 #impForm {
   margin: 0 auto;
   padding: 1rem 0 0;
   width: 100%;
   text-align: center;
   background-color: white; }
-  /* line 40, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+  /* line 40, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
   #impForm.magellan {
     margin: 0 auto;
     position: fixed;
@@ -2456,12 +2456,12 @@ label.error {
     transition: 2000ms ease-in-out background-color;
     background-color: #ffd; }
 
-/* line 50, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+/* line 50, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
 .imps {
   list-style-type: none;
   margin: 0;
   padding: 0; }
-  /* line 55, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+  /* line 55, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
   .imps li:not(.empty) {
     font-size: 1.5em;
     font-weight: bold;
@@ -2472,13 +2472,13 @@ label.error {
     border-radius: 5px;
     color: #333;
     cursor: pointer; }
-    /* line 70, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+    /* line 70, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
     .imps li:not(.empty) small {
       color: #666; }
-    /* line 73, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+    /* line 73, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
     .imps li:not(.empty), .imps li:not(.empty) small {
       text-shadow: 0 0 20px white; }
-    /* line 76, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+    /* line 76, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
     .imps li:not(.empty):nth-child(n) {
       background: #ff9999;
       background: -moz-linear-gradient(top, #ff9999 0%, #f66 99%);
@@ -2487,7 +2487,7 @@ label.error {
       background: -o-linear-gradient(top, #ff9999 0%, #f66 99%);
       background: -ms-linear-gradient(top, #ff9999 0%, #f66 99%);
       background: linear-gradient(to bottom, #ff9999 0%, #f66 99%); }
-      /* line 81, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+      /* line 81, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
       .imps li:not(.empty):nth-child(n):hover {
         background: #ffcccc;
         background: -moz-linear-gradient(top, #ffcccc 0%, #ff9999 99%);
@@ -2496,7 +2496,7 @@ label.error {
         background: -o-linear-gradient(top, #ffcccc 0%, #ff9999 99%);
         background: -ms-linear-gradient(top, #ffcccc 0%, #ff9999 99%);
         background: linear-gradient(to bottom, #ffcccc 0%, #ff9999 99%); }
-    /* line 84, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+    /* line 84, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
     .imps li:not(.empty):nth-child(2n) {
       background: #9999ff;
       background: -moz-linear-gradient(top, #9999ff 0%, #66f 99%);
@@ -2505,7 +2505,7 @@ label.error {
       background: -o-linear-gradient(top, #9999ff 0%, #66f 99%);
       background: -ms-linear-gradient(top, #9999ff 0%, #66f 99%);
       background: linear-gradient(to bottom, #9999ff 0%, #66f 99%); }
-      /* line 89, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+      /* line 89, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
       .imps li:not(.empty):nth-child(2n):hover {
         background: #ccccff;
         background: -moz-linear-gradient(top, #ccccff 0%, #9999ff 99%);
@@ -2514,7 +2514,7 @@ label.error {
         background: -o-linear-gradient(top, #ccccff 0%, #9999ff 99%);
         background: -ms-linear-gradient(top, #ccccff 0%, #9999ff 99%);
         background: linear-gradient(to bottom, #ccccff 0%, #9999ff 99%); }
-    /* line 92, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+    /* line 92, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
     .imps li:not(.empty):nth-child(3n) {
       background: #99ff99;
       background: -moz-linear-gradient(top, #99ff99 0%, #6f6 99%);
@@ -2523,7 +2523,7 @@ label.error {
       background: -o-linear-gradient(top, #99ff99 0%, #6f6 99%);
       background: -ms-linear-gradient(top, #99ff99 0%, #6f6 99%);
       background: linear-gradient(to bottom, #99ff99 0%, #6f6 99%); }
-      /* line 97, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+      /* line 97, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
       .imps li:not(.empty):nth-child(3n):hover {
         background: #ccffcc;
         background: -moz-linear-gradient(top, #ccffcc 0%, #99ff99 99%);
@@ -2532,7 +2532,7 @@ label.error {
         background: -o-linear-gradient(top, #ccffcc 0%, #99ff99 99%);
         background: -ms-linear-gradient(top, #ccffcc 0%, #99ff99 99%);
         background: linear-gradient(to bottom, #ccffcc 0%, #99ff99 99%); }
-    /* line 100, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+    /* line 100, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
     .imps li:not(.empty):nth-child(4n) {
       background: #ff99ff;
       background: -moz-linear-gradient(top, #ff99ff 0%, #f6f 99%);
@@ -2541,7 +2541,7 @@ label.error {
       background: -o-linear-gradient(top, #ff99ff 0%, #f6f 99%);
       background: -ms-linear-gradient(top, #ff99ff 0%, #f6f 99%);
       background: linear-gradient(to bottom, #ff99ff 0%, #f6f 99%); }
-      /* line 105, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-xD74k26H.tmp/app/styles/app.sass */
+      /* line 105, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
       .imps li:not(.empty):nth-child(4n):hover {
         background: #ffccff;
         background: -moz-linear-gradient(top, #ffccff 0%, #ff99ff 99%);
@@ -2550,5 +2550,15 @@ label.error {
         background: -o-linear-gradient(top, #ffccff 0%, #ff99ff 99%);
         background: -ms-linear-gradient(top, #ffccff 0%, #ff99ff 99%);
         background: linear-gradient(to bottom, #ffccff 0%, #ff99ff 99%); }
+
+/* line 108, /Users/ohcibi/Documents/Projekte/xmasc/public/tmp/tree_merger-tmp_dest_dir-2geR6wtj.tmp/app/styles/app.sass */
+#countdowntimer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  font-size: 2em; }
 
 /*# sourceMappingURL=xmasc-frontend.css.map */
