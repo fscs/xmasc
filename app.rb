@@ -1,8 +1,10 @@
 require 'sinatra'
 require 'sinatra/activerecord'
+require 'action_mailer'
 require './config/environments'
 
 require './app/models/imp'
+require './app/mailer/imp'
 
 use Rack::Auth::Basic, "Restricted Area" do |username, password|
   username == 'wichtel' and password == 'wichtelmeister'
@@ -24,9 +26,14 @@ post '/api/imps' do
 
   imp = Imp.new params["imp"]
   if imp.save
+    send_welcome_mail_to imp
     { imp: imp }.to_json
   else
     status 422
     { errors: imp.errors }.to_json
   end
+end
+
+def send_welcome_mail_to imp
+  ImpMailer.welcome(imp.name, imp.email).deliver
 end
