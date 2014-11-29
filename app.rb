@@ -5,10 +5,7 @@ require './config/environments'
 
 require './app/models/imp'
 require './app/mailer/imp'
-
-use Rack::Auth::Basic, "Restricted Area" do |username, password|
-  username == 'wichtel' and password == 'wichtelmeister'
-end
+require './app/helpers'
 
 get '/' do
   File.read 'public/dist/index.html'
@@ -20,6 +17,8 @@ get '/api/imps' do
 end
 
 post '/api/imps' do
+  protect!
+
   content_type :json
 
   params = JSON.parse request.body.read
