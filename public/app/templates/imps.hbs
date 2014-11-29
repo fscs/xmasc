@@ -1,28 +1,32 @@
 <div class="magellan-wrapper">
   <form id="impForm" {{bind-attr class="view.magellan"}}>
-    <div class="row collapse prefix-round postfix-round">
-      <div class="small-3 columns">
-        {{view "select" name="calendar" prompt="Kalender" value=impCalendar content=calendars classNameBindings=":prefix calendarError:error"}}
-        {{#if calendarError}}
-          <small class="error">{{calendarError}}</small>
-        {{/if}}
-      </div>
-      <div class="small-3 columns">
-        {{input name="name" value=impName placeholder="Name" class=nameError:error}}
-        {{#if nameError}}
-          <small class="error">{{nameError}}</small>
-        {{/if}}
-      </div>
-      <div class="small-3 columns">
-        {{input name="email" value=impMail placeholder="E-Mail" class=emailError:error}}
-        {{#if emailError}}
-          <small class="error">{{emailError}}</small>
-        {{/if}}
-      </div>
-      <div class="small-2 columns">
-        <button {{action "add-imp"}} class="button postfix">Pekmez</button>
-      </div>
-    </div>
+    {{#unless authenticated}}
+      {{partial "countdown"}}
+    {{else}}
+        <div class="row collapse prefix-round postfix-round">
+          <div class="small-3 columns">
+            {{view "select" name="calendar" prompt="Kalender" value=impCalendar content=calendars classNameBindings=":prefix calendarError:error"}}
+            {{#if calendarError}}
+              <small class="error">{{calendarError}}</small>
+            {{/if}}
+          </div>
+          <div class="small-3 columns">
+            {{input name="name" value=impName placeholder="Name" class=nameError:error}}
+            {{#if nameError}}
+              <small class="error">{{nameError}}</small>
+            {{/if}}
+          </div>
+          <div class="small-3 columns">
+            {{input name="email" value=impMail placeholder="E-Mail" class=emailError:error}}
+            {{#if emailError}}
+              <small class="error">{{emailError}}</small>
+            {{/if}}
+          </div>
+          <div class="small-2 columns">
+            <button {{action "add-imp"}} class="button postfix">Pekmez</button>
+          </div>
+        </div>
+    {{/unless}}
   </form>
 </div>
 

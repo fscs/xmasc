@@ -42,26 +42,27 @@ body
   height: 80px
   margin: 20px 0 0
 
+$padding: $column-gutter / 2
+
 #impForm
-  $padding: $column-gutter / 2
   margin: 0 auto
   padding: 1rem 0 0
   text-align: center
 
-  &.magellan
-    margin: 0 auto
-    position: fixed
-    padding-left: $padding
-    padding-right: $padding
-    z-index: 99
-    top: 0
-    border-bottom: 1px solid $xmasc-red
-    box-shadow: 0 0 15px 2px $xmasc-red
-    transition: 100ms ease-in-out background-color
-    background-color: #ffd
-    width: $row-width
-    -webkit-transform: translateX(-$padding)
-    transform: translateX(-$padding)
+.magellan
+  margin: 0 auto
+  position: fixed
+  padding-left: $padding
+  padding-right: $padding
+  z-index: 99
+  top: 0
+  border-bottom: 1px solid $xmasc-red
+  box-shadow: 0 0 15px 2px $xmasc-red
+  transition: 100ms ease-in-out background-color
+  background-color: #ffd
+  width: $row-width
+  -webkit-transform: translateX(-$padding)
+  transform: translateX(-$padding)
 
 .imps
   list-style-type: none
@@ -125,3 +126,6 @@ body
   font-weight: bold
   font-size: 1.3em
   color: $xmasc-red
+
+  .magellan &
+    padding: 0 0 1rem

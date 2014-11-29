@@ -9,6 +9,7 @@ computed = Ember.computed
 filterBy = computed.filterBy
 sort = computed.sort
 alias = computed.alias
+reads = computed.reads
 
 compare = Ember.compare
 
@@ -19,9 +20,13 @@ restFor = (impsKey) ->
 compareImpDesc = (imp1, imp2) -> compare +get(imp2, "id"), +get(imp1, "id")
 
 ImpsController = Ember.ArrayController.extend
+  needs: ["index"]
+
   actions:
     "add-imp": ->
       @createImp @get("impName"), @get("impMail"), @get("impCalendar")
+
+  displayTime: reads "controllers.index.displayTime"
 
   impName: null
   impMail: null
