@@ -6,8 +6,7 @@ ImpsView = Ember.View.extend
       @set "scrollTop", Ember.$(document).scrollTop()
   ).on "didInsertElement"
 
-  magellan: (-> @get("scrollTop") > 403).property "scrollTop"
-
+  magellan: (-> @get("scrollTop") > 352).property "scrollTop"
 
 
 `export default ImpsView`

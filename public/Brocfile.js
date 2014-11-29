@@ -8,6 +8,7 @@ var app = new EmberApp({
   }
 });
 
+app.import("vendor/snowstorm-min.js");
 // Use `app.import` to add additional libraries to the generated
 // output files.
 //
