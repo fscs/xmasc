@@ -1,9 +1,11 @@
 `import Ember from 'ember'`
 
+$ = Ember.$
+
 ImpsView = Ember.View.extend
   listenForScroll: (->
-    Ember.$(document).on "scroll", =>
-      @set "scrollTop", Ember.$(document).scrollTop()
+    scroll = => @set "scrollTop", Ember.$(document).scrollTop()
+    $(document).on "scroll", scroll
   ).on "didInsertElement"
 
   magellan: (-> @get("scrollTop") > 352).property "scrollTop"
