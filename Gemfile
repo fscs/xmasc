@@ -5,10 +5,12 @@ gem "activerecord"
 gem "sinatra-activerecord"
 gem "actionmailer"
 
-group :development do
+group :development, :test do
   gem "sqlite3"
   gem "pry"
   gem "faker"
+
+  gem "rspec"
 end
 
 group :production do
