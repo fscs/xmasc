@@ -45,7 +45,9 @@
       {{#each imps}}
         {{partial "imp"}}
       {{else}}
-        <li class="empty"><em>Noch keine Teilnehmer vorhanden. Sei der Erste!</em></li>
+        {{#if authenticated}}
+          <li class="empty"><em>Noch keine Teilnehmer vorhanden. Sei der Erste!</em></li>
+        {{/if}}
       {{/each}}
     </ul>
   </div>

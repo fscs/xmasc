@@ -33,6 +33,12 @@ post '/api/imps' do
   end
 end
 
+get '/authenticate' do
+  protect!
+
+  %w({"success": true})
+end
+
 def send_welcome_mail_to imp
   ImpMailer.welcome(imp.name, imp.email).deliver
 end
