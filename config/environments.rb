@@ -42,3 +42,11 @@ configure :production do
   }
   ActionMailer::Base.delivery_method = :smtp
 end
+
+configure :test do
+  config = YAML.load_file('config/database.yml')["test"]
+  ActiveRecord::Base.establish_connection(
+    adapter: config["adapter"],
+    database: config["database"]
+  )
+end

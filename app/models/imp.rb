@@ -5,7 +5,7 @@ class Imp < ActiveRecord::Base
   validate :rest_of_calendar, on: :create
 
   def rest_of_calendar
-    if self.class.where(calendar: calendar).length >= 24
+    if !calendar.nil? and self.class.where(calendar: calendar).length >= 24
       errors.add :calendar, "ist schon ausgebucht!"
     end
 
