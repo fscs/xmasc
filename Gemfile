@@ -8,6 +8,7 @@ gem "actionmailer"
 group :development do
   gem "sqlite3"
   gem "pry"
+  gem "faker"
 end
 
 group :production do
