@@ -7,10 +7,10 @@ configure :development, :production do
 end
 
 configure :development do
-  config = YAML.load_file('config/database.yml')
+  config = YAML.load_file('config/database.yml')["development"]
   ActiveRecord::Base.establish_connection(
-    adapter: config["development"]["adapter"],
-    database: config["development"]["database"]
+    adapter: config["adapter"],
+    database: config["database"]
   )
 
   ActionMailer::Base.delivery_method = :file
