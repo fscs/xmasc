@@ -1,6 +1,7 @@
 class Imp < ActiveRecord::Base
   validates :name, :email, presence: { message: "ist erforderlich" }
   validates :email, uniqueness: { message: "ist schon angemeldet" }
+  validates :tuerchen, uniqueness: { scope: "calendar", allow_nil: true }
   validate :rest_of_calendar, on: :create
 
   def rest_of_calendar

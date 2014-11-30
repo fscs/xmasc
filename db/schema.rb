@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141130114945) do
+ActiveRecord::Schema.define(version: 20141130120529) do
 
   create_table "imps", force: true do |t|
     t.string  "name"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20141130114945) do
     t.integer "tuerchen"
   end
 
+  add_index "imps", ["calendar", "tuerchen"], name: "index_imps_on_calendar_and_tuerchen", unique: true
   add_index "imps", ["email"], name: "index_imps_on_email", unique: true
 
 end
