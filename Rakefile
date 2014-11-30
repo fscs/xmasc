@@ -15,6 +15,18 @@ namespace :xmasc do
   task :roll do
     Roller.roll
   end
+
+  desc "send mail to all imps to notificate them about their tuerchen"
+  task :mail do
+    Imp.all.each do |imp|
+      mail = ImpMailer.tuerchen imp.name, imp.email, imp.calendar, imp.tuerchen
+      if mail.deliver
+        puts "Mail an #{imp.name} (#{imp.email}) versandt"
+      else
+        puts "Mailversand an #{imp.name} (#{imp.email}) fehlgeschlagen"
+      end
+    end
+  end
 end
 
 namespace :db do
