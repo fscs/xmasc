@@ -6,6 +6,7 @@ require './config/environments'
 require './app/models/imp'
 require './app/mailer/imp'
 require './app/helpers'
+require './app/lib/roller'
 
 get '/' do
   File.read 'public/dist/index.html'
