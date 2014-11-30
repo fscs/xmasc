@@ -16,3 +16,12 @@ namespace :xmasc do
     Roller.roll
   end
 end
+
+namespace :db do
+  namespace :xmasc do
+    desc "Truncates imps from db"
+    task :truncate_imps do
+      Imp.delete_all
+    end
+  end
+end
