@@ -14,7 +14,7 @@ describe Imp do
   end
 
   it "does not accept more than 48 tuerchen in total" do
-    48.times { create :random_imp }
-    expect { create :random_imp }.to raise_error ActiveRecord::RecordInvalid
+    48.times { create :nil_imp }
+    expect { create :nil_imp }.to raise_error ActiveRecord::RecordInvalid
   end
 end
