@@ -12,12 +12,15 @@ alias = computed.alias
 reads = computed.reads
 
 compare = Ember.compare
+isEmpty = Ember.isEmpty
 
 restFor = (impsKey) ->
   lengthKey = "#{impsKey}.length"
   computed lengthKey, -> 24 - @get lengthKey
 
 compareImpDesc = (imp1, imp2) -> compare +get(imp2, "id"), +get(imp1, "id")
+
+filterImp = (imp, filter) -> get(imp, "name").match new RegExp filter, "i"
 
 ImpsController = Ember.ArrayController.extend
   needs: ["index", "application"]
@@ -56,7 +59,16 @@ ImpsController = Ember.ArrayController.extend
 
   filteredImps: filterBy "content", "isDirty", false
 
-  imps: sort "filteredImps", compareImpDesc
+  sortedImps: sort "filteredImps", compareImpDesc
+
+  imps: (->
+    impFilter = @get "impFilter"
+    imps = @get "sortedImps"
+    unless impFilter?
+      imps
+    else
+      imps.filter (imp) -> isEmpty(impFilter) or filterImp imp, impFilter
+  ).property "impFilter", "sortedImps"
 
   starWarsImps: filterBy "filteredImps", "calendar", CALENDARS[0]
   restStarWars: restFor "starWarsImps"
