@@ -6,4 +6,11 @@ class ImpMailer < ActionMailer::Base
     @imp = name
     mail(to: email) { |format| format.html }
   end
+
+  def tuerchen(name, email, calendar, tuerchen)
+    @imp = name
+    @calendar = calendar
+    @tuerchen = tuerchen
+    mail(to: email) { |format| format.html }
+  end
 end
