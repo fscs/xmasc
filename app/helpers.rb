@@ -1,5 +1,5 @@
-USER = "wichtel"
-PASS = "wichtelmeister"
+USER = ENV["WICHTELUSER"]
+PASS = ENV["WICHTELPASS"]
 
 helpers do
   def protect!
