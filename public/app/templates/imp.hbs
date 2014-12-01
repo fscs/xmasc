@@ -1,6 +1,12 @@
 <li>
   {{name}}
   <small>
-    {{calendar}}{{#if tuerchen}} Türchen: {{tuerchen}}{{/if}}
+    {{calendar}}
+    {{#if tuerchen}}
+      <div class="tuerchen">
+        Türchen
+        <div>{{tuerchen}}</div>
+      </div>
+    {{/if}}
   </small>
 </li>

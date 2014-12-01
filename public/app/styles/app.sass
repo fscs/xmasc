@@ -91,7 +91,7 @@ $padding: $column-gutter / 2
       text-shadow: 0 0 20px white
 
     &:nth-child(n)
-      $bg-color2: #f66
+      $bg-color2: #C4EDE4
       $bg-color: lighten($bg-color2, 10%)
       @include linear-top-bottom-gradient($bg-color, $bg-color2)
 
@@ -99,23 +99,7 @@ $padding: $column-gutter / 2
         @include linear-top-bottom-gradient(lighten($bg-color, 10%), lighten($bg-color2, 10%))
 
     &:nth-child(2n)
-      $bg-color2: #66f
-      $bg-color: lighten($bg-color2, 10%)
-      @include linear-top-bottom-gradient($bg-color, $bg-color2)
-
-      &:hover
-        @include linear-top-bottom-gradient(lighten($bg-color, 10%), lighten($bg-color2, 10%))
-
-    &:nth-child(3n)
-      $bg-color2: #6f6
-      $bg-color: lighten($bg-color2, 10%)
-      @include linear-top-bottom-gradient($bg-color, $bg-color2)
-
-      &:hover
-        @include linear-top-bottom-gradient(lighten($bg-color, 10%), lighten($bg-color2, 10%))
-
-    &:nth-child(4n)
-      $bg-color2: #f6f
+      $bg-color2: #E3F6F3
       $bg-color: lighten($bg-color2, 10%)
       @include linear-top-bottom-gradient($bg-color, $bg-color2)
 
@@ -138,3 +122,13 @@ $padding: $column-gutter / 2
   cursor: pointer
   width: 20px
   height: 20px
+
+.tuerchen
+  color: $xmasc-red
+  position: relative
+  bottom: 15px
+  float: right
+  div
+    font-size: 3em
+    position: relative
+    bottom: 15px
