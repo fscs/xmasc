@@ -2,3 +2,7 @@ vendor/ruby/
 .bundle/
 db/*.sqlite3*
 tmp/
+
+/log
+
+.env

@@ -49,6 +49,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    puma (2.15.3)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
@@ -91,7 +92,11 @@ DEPENDENCIES
   faker
   pg
   pry
+  puma
   rspec
   sinatra
   sinatra-activerecord
   sqlite3
+
+BUNDLED WITH
+   1.10.6

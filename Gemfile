@@ -4,6 +4,7 @@ gem "sinatra"
 gem "activerecord"
 gem "sinatra-activerecord"
 gem "actionmailer"
+gem "puma"
 
 group :development, :test do
   gem "sqlite3"
