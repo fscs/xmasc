@@ -1,62 +1,1199 @@
-eval("//# sourceURL=vendor/ember-cli/loader.js");
+"use strict";
+/* jshint ignore:start */
 
-;eval("define(\"xmasc-frontend/adapters/application\", \n  [\"ember-data\",\"exports\"],\n  function(__dependency1__, __exports__) {\n    \"use strict\";\n    var DS = __dependency1__[\"default\"];\n    var ApplicationAdapter;\n\n    ApplicationAdapter = DS.ActiveModelAdapter.extend({\n      host: \"/api\"\n    });\n\n    __exports__[\"default\"] = ApplicationAdapter;\n  });//# sourceURL=xmasc-frontend/adapters/application.js");
+/* jshint ignore:end */
 
-;eval("define(\"xmasc-frontend/app\", \n  [\"ember\",\"ember/resolver\",\"ember/load-initializers\",\"xmasc-frontend/config/environment\",\"exports\"],\n  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {\n    \"use strict\";\n    var Ember = __dependency1__[\"default\"];\n    var Resolver = __dependency2__[\"default\"];\n    var loadInitializers = __dependency3__[\"default\"];\n    var config = __dependency4__[\"default\"];\n\n    Ember.MODEL_FACTORY_INJECTIONS = true;\n\n    var App = Ember.Application.extend({\n      modulePrefix: config.modulePrefix,\n      podModulePrefix: config.podModulePrefix,\n      Resolver: Resolver\n    });\n\n    loadInitializers(App, config.modulePrefix);\n\n    __exports__[\"default\"] = App;\n  });//# sourceURL=xmasc-frontend/app.js");
+define("xmasc-frontend/adapters/application", ["exports", "ember-data"], function (exports, _emberData) {
+  var ApplicationAdapter;
 
-;eval("define(\"xmasc-frontend/controllers/imps\", \n  [\"ember\",\"exports\"],\n  function(__dependency1__, __exports__) {\n    \"use strict\";\n    var Ember = __dependency1__[\"default\"];\n    var CALENDARS, ImpsController, alias, compare, compareImpDesc, computed, filterBy, filterImp, get, isEmpty, reads, restFor, setProperties, sort;\n\n    CALENDARS = [\"Lego Star Wars\", \"Lego City\"];\n\n    get = Ember.get;\n\n    setProperties = Ember.setProperties;\n\n    computed = Ember.computed;\n\n    filterBy = computed.filterBy;\n\n    sort = computed.sort;\n\n    alias = computed.alias;\n\n    reads = computed.reads;\n\n    compare = Ember.compare;\n\n    isEmpty = Ember.isEmpty;\n\n    restFor = function(impsKey) {\n      var lengthKey;\n      lengthKey = \"\" + impsKey + \".length\";\n      return computed(lengthKey, function() {\n        return 24 - this.get(lengthKey);\n      });\n    };\n\n    compareImpDesc = function(imp1, imp2) {\n      return compare(+get(imp2, \"id\"), +get(imp1, \"id\"));\n    };\n\n    filterImp = function(imp, filter) {\n      return get(imp, \"name\").match(new RegExp(filter, \"i\"));\n    };\n\n    ImpsController = Ember.ArrayController.extend({\n      needs: [\"index\", \"application\"],\n      actions: {\n        \"add-imp\": function() {\n          return this.createImp(this.get(\"impName\"), this.get(\"impMail\"), this.get(\"impCalendar\"));\n        }\n      },\n      displayTime: reads(\"controllers.index.displayTime\"),\n      authenticated: reads(\"controllers.application.authenticated\"),\n      impName: null,\n      impMail: null,\n      impCalendar: null,\n      nameError: alias(\"errors.name.firstObject\"),\n      emailError: alias(\"errors.email.firstObject\"),\n      calendarError: alias(\"errors.calendar.firstObject\"),\n      calendars: CALENDARS,\n      createImp: function(name, mail, calendar) {\n        var imp;\n        imp = this.store.createRecord(\"imp\", {\n          name: name,\n          email: mail,\n          calendar: calendar\n        });\n        return imp.save().then(((function(_this) {\n          return function() {\n            return _this.reset();\n          };\n        })(this)), (function(_this) {\n          return function(response) {\n            _this.store.unloadRecord(imp);\n            return _this.set(\"errors\", response.errors);\n          };\n        })(this));\n      },\n      reset: function() {\n        setProperties(this, {\n          impName: null,\n          impMail: null,\n          impCalendar: null\n        });\n        return this.set(\"errors\", {});\n      },\n      filteredImps: filterBy(\"content\", \"isDirty\", false),\n      sortedImps: sort(\"filteredImps\", compareImpDesc),\n      imps: (function() {\n        var impFilter, imps;\n        impFilter = this.get(\"impFilter\");\n        imps = this.get(\"sortedImps\");\n        if (impFilter == null) {\n          return imps;\n        } else {\n          return imps.filter(function(imp) {\n            return isEmpty(impFilter) || filterImp(imp, impFilter);\n          });\n        }\n      }).property(\"impFilter\", \"sortedImps\"),\n      starWarsImps: filterBy(\"filteredImps\", \"calendar\", CALENDARS[0]),\n      restStarWars: restFor(\"starWarsImps\"),\n      cityImps: filterBy(\"filteredImps\", \"calendar\", CALENDARS[1]),\n      restCity: restFor(\"cityImps\")\n    });\n\n    __exports__[\"default\"] = ImpsController;\n  });//# sourceURL=xmasc-frontend/controllers/imps.js");
+  ApplicationAdapter = _emberData["default"].ActiveModelAdapter.extend({
+    host: "/api"
+  });
 
-;eval("define(\"xmasc-frontend/controllers/index\", \n  [\"ember\",\"exports\"],\n  function(__dependency1__, __exports__) {\n    \"use strict\";\n    var Ember = __dependency1__[\"default\"];\n    var IndexController, dayMilis, floor, getRestTime, getTimeFrom, hourMilis, minuteMilis, secondMilis;\n\n    getRestTime = function() {\n      return new Date(2014, 11, 1) - new Date();\n    };\n\n    floor = Math.floor;\n\n    dayMilis = 864e5;\n\n    hourMilis = 36e5;\n\n    minuteMilis = 6e4;\n\n    secondMilis = 1e3;\n\n    getTimeFrom = function(time) {\n      var days, hours, minutes, seconds;\n      days = floor(time / dayMilis);\n      hours = floor((time % dayMilis) / hourMilis);\n      minutes = floor((time % hourMilis) / minuteMilis);\n      seconds = floor((time % minuteMilis) / secondMilis);\n      return \"Noch \" + days + \" Tage \" + hours + \" Stunden \" + minutes + \" Minuten \" + seconds + \" Sekunden\";\n    };\n\n    IndexController = Ember.ObjectController.extend({\n      time: getRestTime(),\n      displayTime: (function() {\n        var time;\n        time = this.get(\"time\");\n        if (time > 0) {\n          return getTimeFrom(time);\n        } else {\n          return \"Frohe Weihnachten! · Merry Christmas! <br> Chanukah Sameach! · Heri Za Kwanzaa!\";\n        }\n      }).property(\"time\"),\n      startTimer: (function() {\n        return setInterval(((function(_this) {\n          return function() {\n            return _this.set(\"time\", getRestTime());\n          };\n        })(this)), 1000);\n      }).on(\"init\")\n    });\n\n    __exports__[\"default\"] = IndexController;\n  });//# sourceURL=xmasc-frontend/controllers/index.js");
+  exports["default"] = ApplicationAdapter;
+});
+define('xmasc-frontend/app', ['exports', 'ember', 'ember/resolver', 'ember/load-initializers', 'xmasc-frontend/config/environment'], function (exports, _ember, _emberResolver, _emberLoadInitializers, _xmascFrontendConfigEnvironment) {
 
-;eval("define(\"xmasc-frontend/initializers/export-application-global\", \n  [\"ember\",\"xmasc-frontend/config/environment\",\"exports\"],\n  function(__dependency1__, __dependency2__, __exports__) {\n    \"use strict\";\n    var Ember = __dependency1__[\"default\"];\n    var config = __dependency2__[\"default\"];\n\n    function initialize(container, application) {\n      var classifiedName = Ember.String.classify(config.modulePrefix);\n\n      if (config.exportApplicationGlobal) {\n        window[classifiedName] = application;\n      }\n    };\n    __exports__.initialize = initialize;\n    __exports__[\"default\"] = {\n      name: \'export-application-global\',\n\n      initialize: initialize\n    };\n  });//# sourceURL=xmasc-frontend/initializers/export-application-global.js");
+  var App = undefined;
 
-;eval("define(\"xmasc-frontend/models/imp\", \n  [\"ember-data\",\"exports\"],\n  function(__dependency1__, __exports__) {\n    \"use strict\";\n    var DS = __dependency1__[\"default\"];\n    var Imp, attr;\n\n    attr = DS.attr;\n\n    Imp = DS.Model.extend({\n      name: attr(\"string\"),\n      email: attr(\"string\"),\n      calendar: attr(\"string\"),\n      tuerchen: attr(\"number\")\n    });\n\n    __exports__[\"default\"] = Imp;\n  });//# sourceURL=xmasc-frontend/models/imp.js");
+  _ember['default'].MODEL_FACTORY_INJECTIONS = true;
 
-;eval("define(\"xmasc-frontend/router\", \n  [\"ember\",\"xmasc-frontend/config/environment\",\"exports\"],\n  function(__dependency1__, __dependency2__, __exports__) {\n    \"use strict\";\n    var Ember = __dependency1__[\"default\"];\n    var config = __dependency2__[\"default\"];\n    var Router;\n\n    Router = Ember.Router.extend({\n      location: config.locationType\n    });\n\n    Router.map(function() {\n      return this.resource(\"imps\");\n    });\n\n    __exports__[\"default\"] = Router;\n  });//# sourceURL=xmasc-frontend/router.js");
+  App = _ember['default'].Application.extend({
+    modulePrefix: _xmascFrontendConfigEnvironment['default'].modulePrefix,
+    podModulePrefix: _xmascFrontendConfigEnvironment['default'].podModulePrefix,
+    Resolver: _emberResolver['default']
+  });
 
-;eval("define(\"xmasc-frontend/routes/application\", \n  [\"ember\",\"exports\"],\n  function(__dependency1__, __exports__) {\n    \"use strict\";\n    var Ember = __dependency1__[\"default\"];\n    var ApplicationRoute;\n\n    ApplicationRoute = Ember.Route.extend({\n      actions: {\n        authenticate: function() {\n          var failure, success;\n          success = (function(_this) {\n            return function() {\n              return _this.controller.set(\"authenticated\", true);\n            };\n          })(this);\n          failure = (function(_this) {\n            return function() {\n              return _this.controller.set(\"authenticated\", false);\n            };\n          })(this);\n          return Em.$.getJSON(\"/authenticate\").then(success, failure);\n        }\n      }\n    });\n\n    __exports__[\"default\"] = ApplicationRoute;\n  });//# sourceURL=xmasc-frontend/routes/application.js");
+  (0, _emberLoadInitializers['default'])(App, _xmascFrontendConfigEnvironment['default'].modulePrefix);
 
-;eval("define(\"xmasc-frontend/routes/imps\", \n  [\"ember\",\"exports\"],\n  function(__dependency1__, __exports__) {\n    \"use strict\";\n    var Ember = __dependency1__[\"default\"];\n    var ImpsRoute;\n\n    ImpsRoute = Ember.Route.extend({\n      model: function() {\n        return this.store.find(\"imp\");\n      }\n    });\n\n    __exports__[\"default\"] = ImpsRoute;\n  });//# sourceURL=xmasc-frontend/routes/imps.js");
+  exports['default'] = App;
+});
+define('xmasc-frontend/components/app-version', ['exports', 'ember-cli-app-version/components/app-version', 'xmasc-frontend/config/environment'], function (exports, _emberCliAppVersionComponentsAppVersion, _xmascFrontendConfigEnvironment) {
 
-;eval("define(\"xmasc-frontend/templates/application\", \n  [\"ember\",\"exports\"],\n  function(__dependency1__, __exports__) {\n    \"use strict\";\n    var Ember = __dependency1__[\"default\"];\n    __exports__[\"default\"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {\n    this.compilerInfo = [4,\'>= 1.0.0\'];\n    helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};\n      var buffer = \'\', stack1, escapeExpression=this.escapeExpression;\n\n\n      data.buffer.push(\"<a \");\n      data.buffer.push(escapeExpression(helpers.action.call(depth0, \"authenticate\", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:[\"STRING\"],data:data})));\n      data.buffer.push(\" id=\\\"authLink\\\"></a>\\n<div class=\\\"wrapper row\\\">\\n  <div class=\\\"small-11 columns\\\">\\n  <header id=\\\"xmascHeader\\\" class=\\\"row\\\">\\n    <img src=\\\"img/header.jpg\\\">\\n  </header>\\n  </div>\\n</div>\\n<div class=\\\"wrapper row\\\">\\n  <div class=\\\"small-11 columns text-center\\\">\\n    \");\n      stack1 = helpers._triageMustache.call(depth0, \"outlet\", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"\\n  </div>\\n</div>\\n\");\n      return buffer;\n      \n    });\n  });//# sourceURL=xmasc-frontend/templates/application.js");
+  var name = _xmascFrontendConfigEnvironment['default'].APP.name;
+  var version = _xmascFrontendConfigEnvironment['default'].APP.version;
 
-;eval("define(\"xmasc-frontend/templates/countdown\", \n  [\"ember\",\"exports\"],\n  function(__dependency1__, __exports__) {\n    \"use strict\";\n    var Ember = __dependency1__[\"default\"];\n    __exports__[\"default\"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {\n    this.compilerInfo = [4,\'>= 1.0.0\'];\n    helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};\n      var buffer = \'\', escapeExpression=this.escapeExpression;\n\n\n      data.buffer.push(\"<div id=\\\"countdowntimer\\\">\");\n      data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, \"displayTime\", {hash:{\n        \'unescaped\': (\"true\")\n      },hashTypes:{\'unescaped\': \"STRING\"},hashContexts:{\'unescaped\': depth0},contexts:[depth0],types:[\"ID\"],data:data})));\n      data.buffer.push(\"</div>\\n\");\n      return buffer;\n      \n    });\n  });//# sourceURL=xmasc-frontend/templates/countdown.js");
+  exports['default'] = _emberCliAppVersionComponentsAppVersion['default'].extend({
+    version: version,
+    name: name
+  });
+});
+define('xmasc-frontend/controllers/array', ['exports', 'ember'], function (exports, _ember) {
+  exports['default'] = _ember['default'].Controller;
+});
+define("xmasc-frontend/controllers/imps", ["exports", "ember"], function (exports, _ember) {
+  var CALENDARS, ImpsController, alias, compare, compareImpDesc, computed, filterBy, filterImp, get, isEmpty, reads, restFor, setProperties, sort;
 
-;eval("define(\"xmasc-frontend/templates/imp\", \n  [\"ember\",\"exports\"],\n  function(__dependency1__, __exports__) {\n    \"use strict\";\n    var Ember = __dependency1__[\"default\"];\n    __exports__[\"default\"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {\n    this.compilerInfo = [4,\'>= 1.0.0\'];\n    helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};\n      var buffer = \'\', stack1, self=this;\n\n    function program1(depth0,data) {\n      \n      var buffer = \'\', stack1;\n      data.buffer.push(\"\\n      <div class=\\\"tuerchen\\\">\\n        Türchen\\n        <div>\");\n      stack1 = helpers._triageMustache.call(depth0, \"tuerchen\", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"</div>\\n      </div>\\n    \");\n      return buffer;\n      }\n\n      data.buffer.push(\"<li>\\n  \");\n      stack1 = helpers._triageMustache.call(depth0, \"name\", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"\\n  <small>\\n    \");\n      stack1 = helpers._triageMustache.call(depth0, \"calendar\", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"\\n    \");\n      stack1 = helpers[\'if\'].call(depth0, \"tuerchen\", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"\\n  </small>\\n</li>\\n\");\n      return buffer;\n      \n    });\n  });//# sourceURL=xmasc-frontend/templates/imp.js");
+  CALENDARS = ["Lego Star Wars", "Lego City"];
 
-;eval("define(\"xmasc-frontend/templates/imps\", \n  [\"ember\",\"exports\"],\n  function(__dependency1__, __exports__) {\n    \"use strict\";\n    var Ember = __dependency1__[\"default\"];\n    __exports__[\"default\"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {\n    this.compilerInfo = [4,\'>= 1.0.0\'];\n    helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};\n      var buffer = \'\', stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;\n\n    function program1(depth0,data) {\n      \n      var buffer = \'\', helper, options;\n      data.buffer.push(\"\\n      \");\n      data.buffer.push(escapeExpression((helper = helpers.partial || (depth0 && depth0.partial),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:[\"STRING\"],data:data},helper ? helper.call(depth0, \"countdown\", options) : helperMissing.call(depth0, \"partial\", \"countdown\", options))));\n      data.buffer.push(\"\\n    \");\n      return buffer;\n      }\n\n    function program3(depth0,data) {\n      \n      var buffer = \'\', stack1, helper, options;\n      data.buffer.push(\"\\n        <div class=\\\"row collapse prefix-round postfix-round\\\">\\n          <div class=\\\"small-3 columns\\\">\\n            \");\n      data.buffer.push(escapeExpression(helpers.view.call(depth0, \"select\", {hash:{\n        \'name\': (\"calendar\"),\n        \'prompt\': (\"Kalender\"),\n        \'value\': (\"impCalendar\"),\n        \'content\': (\"calendars\"),\n        \'classNameBindings\': (\":prefix calendarError:error\")\n      },hashTypes:{\'name\': \"STRING\",\'prompt\': \"STRING\",\'value\': \"ID\",\'content\': \"ID\",\'classNameBindings\': \"STRING\"},hashContexts:{\'name\': depth0,\'prompt\': depth0,\'value\': depth0,\'content\': depth0,\'classNameBindings\': depth0},contexts:[depth0],types:[\"STRING\"],data:data})));\n      data.buffer.push(\"\\n            \");\n      stack1 = helpers[\'if\'].call(depth0, \"calendarError\", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(4, program4, data),contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"\\n          </div>\\n          <div class=\\\"small-3 columns\\\">\\n            \");\n      data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{\n        \'name\': (\"name\"),\n        \'value\': (\"impName\"),\n        \'placeholder\': (\"Name\"),\n        \'class\': (\"nameError:error\")\n      },hashTypes:{\'name\': \"STRING\",\'value\': \"ID\",\'placeholder\': \"STRING\",\'class\': \"ID\"},hashContexts:{\'name\': depth0,\'value\': depth0,\'placeholder\': depth0,\'class\': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, \"input\", options))));\n      data.buffer.push(\"\\n            \");\n      stack1 = helpers[\'if\'].call(depth0, \"nameError\", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(6, program6, data),contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"\\n          </div>\\n          <div class=\\\"small-3 columns\\\">\\n            \");\n      data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{\n        \'name\': (\"email\"),\n        \'value\': (\"impMail\"),\n        \'placeholder\': (\"E-Mail\"),\n        \'class\': (\"emailError:error\")\n      },hashTypes:{\'name\': \"STRING\",\'value\': \"ID\",\'placeholder\': \"STRING\",\'class\': \"ID\"},hashContexts:{\'name\': depth0,\'value\': depth0,\'placeholder\': depth0,\'class\': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, \"input\", options))));\n      data.buffer.push(\"\\n            \");\n      stack1 = helpers[\'if\'].call(depth0, \"emailError\", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(8, program8, data),contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"\\n          </div>\\n          <div class=\\\"small-2 columns\\\">\\n            <button \");\n      data.buffer.push(escapeExpression(helpers.action.call(depth0, \"add-imp\", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:[\"STRING\"],data:data})));\n      data.buffer.push(\" class=\\\"button postfix\\\">Pekmez</button>\\n          </div>\\n        </div>\\n    \");\n      return buffer;\n      }\n    function program4(depth0,data) {\n      \n      var buffer = \'\', stack1;\n      data.buffer.push(\"\\n              <small class=\\\"error\\\">\");\n      stack1 = helpers._triageMustache.call(depth0, \"calendarError\", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"</small>\\n            \");\n      return buffer;\n      }\n\n    function program6(depth0,data) {\n      \n      var buffer = \'\', stack1;\n      data.buffer.push(\"\\n              <small class=\\\"error\\\">\");\n      stack1 = helpers._triageMustache.call(depth0, \"nameError\", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"</small>\\n            \");\n      return buffer;\n      }\n\n    function program8(depth0,data) {\n      \n      var buffer = \'\', stack1;\n      data.buffer.push(\"\\n              <small class=\\\"error\\\">\");\n      stack1 = helpers._triageMustache.call(depth0, \"emailError\", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"</small>\\n            \");\n      return buffer;\n      }\n\n    function program10(depth0,data) {\n      \n      var buffer = \'\', stack1;\n      data.buffer.push(\"\\n  <div class=\\\"row\\\">\\n    <div class=\\\"small-11 columns text-center\\\">\\n      Türchen vergeben: <em>\");\n      stack1 = helpers._triageMustache.call(depth0, \"imps.length\", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"/48</em><br>\\n      Lego Star Wars: <em>\");\n      stack1 = helpers._triageMustache.call(depth0, \"restStarWars\", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\" Türchen übrig</em> &middot; Lego City: <em>\");\n      stack1 = helpers._triageMustache.call(depth0, \"restCity\", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\" Türchen übrig</em>\\n    </div>\\n  </div>\\n\");\n      return buffer;\n      }\n\n    function program12(depth0,data) {\n      \n      var buffer = \'\', helper, options;\n      data.buffer.push(\"\\n        \");\n      data.buffer.push(escapeExpression((helper = helpers.partial || (depth0 && depth0.partial),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:[\"STRING\"],data:data},helper ? helper.call(depth0, \"imp\", options) : helperMissing.call(depth0, \"partial\", \"imp\", options))));\n      data.buffer.push(\"\\n      \");\n      return buffer;\n      }\n\n    function program14(depth0,data) {\n      \n      var buffer = \'\', stack1;\n      data.buffer.push(\"\\n        \");\n      stack1 = helpers[\'if\'].call(depth0, \"authenticated\", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(15, program15, data),contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"\\n      \");\n      return buffer;\n      }\n    function program15(depth0,data) {\n      \n      \n      data.buffer.push(\"\\n          <li class=\\\"empty\\\"><em>Noch keine Teilnehmer vorhanden. Sei der Erste!</em></li>\\n        \");\n      }\n\n      data.buffer.push(\"<div class=\\\"magellan-wrapper\\\">\\n  <form id=\\\"impForm\\\" \");\n      data.buffer.push(escapeExpression(helpers[\'bind-attr\'].call(depth0, {hash:{\n        \'class\': (\"view.magellan\")\n      },hashTypes:{\'class\': \"STRING\"},hashContexts:{\'class\': depth0},contexts:[],types:[],data:data})));\n      data.buffer.push(\">\\n    \");\n      stack1 = helpers.unless.call(depth0, \"authenticated\", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"\\n  </form>\\n</div>\\n\\n\");\n      stack1 = helpers[\'if\'].call(depth0, \"authenticated\", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(10, program10, data),contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"\\n\\n<section class=\\\"row\\\">\\n  <div class=\\\"small-11 columns\\\">\\n    \");\n      data.buffer.push(escapeExpression((helper = helpers.input || (depth0 && depth0.input),options={hash:{\n        \'value\': (\"impFilter\"),\n        \'placeholder\': (\"Suche Wichtel\")\n      },hashTypes:{\'value\': \"ID\",\'placeholder\': \"STRING\"},hashContexts:{\'value\': depth0,\'placeholder\': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, \"input\", options))));\n      data.buffer.push(\"\\n    <ul class=\\\"imps\\\">\\n      \");\n      stack1 = helpers.each.call(depth0, \"imps\", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(14, program14, data),fn:self.program(12, program12, data),contexts:[depth0],types:[\"ID\"],data:data});\n      if(stack1 || stack1 === 0) { data.buffer.push(stack1); }\n      data.buffer.push(\"\\n    </ul>\\n  </div>\\n</section>\\n\");\n      return buffer;\n      \n    });\n  });//# sourceURL=xmasc-frontend/templates/imps.js");
+  get = _ember["default"].get;
 
-;eval("define(\"xmasc-frontend/templates/index\", \n  [\"ember\",\"exports\"],\n  function(__dependency1__, __exports__) {\n    \"use strict\";\n    var Ember = __dependency1__[\"default\"];\n    __exports__[\"default\"] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {\n    this.compilerInfo = [4,\'>= 1.0.0\'];\n    helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};\n      var buffer = \'\', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;\n\n\n      data.buffer.push(escapeExpression((helper = helpers.partial || (depth0 && depth0.partial),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:[\"STRING\"],data:data},helper ? helper.call(depth0, \"countdown\", options) : helperMissing.call(depth0, \"partial\", \"countdown\", options))));\n      data.buffer.push(\"\\n<div class=\\\"text-center\\\">\\n  \");\n      data.buffer.push(escapeExpression((helper = helpers[\'link-to\'] || (depth0 && depth0[\'link-to\']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:[\"STRING\",\"STRING\"],data:data},helper ? helper.call(depth0, \"Hier gehts zur Wichtelliste\", \"imps\", options) : helperMissing.call(depth0, \"link-to\", \"Hier gehts zur Wichtelliste\", \"imps\", options))));\n      data.buffer.push(\"\\n</div>\\n\");\n      return buffer;\n      \n    });\n  });//# sourceURL=xmasc-frontend/templates/index.js");
+  setProperties = _ember["default"].setProperties;
 
-;eval("define(\"xmasc-frontend/tests/app.jshint\", \n  [],\n  function() {\n    \"use strict\";\n    module(\'JSHint - .\');\n    test(\'app.js should pass jshint\', function() { \n      ok(true, \'app.js should pass jshint.\'); \n    });\n  });//# sourceURL=xmasc-frontend/tests/app.jshint.js");
+  computed = _ember["default"].computed;
 
-;eval("define(\"xmasc-frontend/tests/helpers/resolver\", \n  [\"ember/resolver\",\"xmasc-frontend/config/environment\",\"exports\"],\n  function(__dependency1__, __dependency2__, __exports__) {\n    \"use strict\";\n    var Resolver = __dependency1__[\"default\"];\n    var config = __dependency2__[\"default\"];\n\n    var resolver = Resolver.create();\n\n    resolver.namespace = {\n      modulePrefix: config.modulePrefix,\n      podModulePrefix: config.podModulePrefix\n    };\n\n    __exports__[\"default\"] = resolver;\n  });//# sourceURL=xmasc-frontend/tests/helpers/resolver.js");
+  filterBy = computed.filterBy;
 
-;eval("define(\"xmasc-frontend/tests/helpers/start-app\", \n  [\"ember\",\"xmasc-frontend/app\",\"xmasc-frontend/router\",\"xmasc-frontend/config/environment\",\"exports\"],\n  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {\n    \"use strict\";\n    var Ember = __dependency1__[\"default\"];\n    var Application = __dependency2__[\"default\"];\n    var Router = __dependency3__[\"default\"];\n    var config = __dependency4__[\"default\"];\n\n    __exports__[\"default\"] = function startApp(attrs) {\n      var App;\n\n      var attributes = Ember.merge({}, config.APP);\n      attributes = Ember.merge(attributes, attrs); // use defaults, but you can override;\n\n      Router.reopen({\n        location: \'none\'\n      });\n\n      Ember.run(function() {\n        App = Application.create(attributes);\n        App.setupForTesting();\n        App.injectTestHelpers();\n      });\n\n      App.reset(); // this shouldn\'t be needed, i want to be able to \"start an app at a specific URL\"\n\n      return App;\n    }\n  });//# sourceURL=xmasc-frontend/tests/helpers/start-app.js");
+  sort = computed.sort;
 
-;eval("define(\"xmasc-frontend/tests/test-helper\", \n  [\"xmasc-frontend/tests/helpers/resolver\",\"ember-qunit\"],\n  function(__dependency1__, __dependency2__) {\n    \"use strict\";\n    var resolver = __dependency1__[\"default\"];\n    var setResolver = __dependency2__.setResolver;\n\n    setResolver(resolver);\n\n    document.write(\'<div id=\"ember-testing-container\"><div id=\"ember-testing\"></div></div>\');\n\n    QUnit.config.urlConfig.push({ id: \'nocontainer\', label: \'Hide container\'});\n    var containerVisibility = QUnit.urlParams.nocontainer ? \'hidden\' : \'visible\';\n    document.getElementById(\'ember-testing-container\').style.visibility = containerVisibility;\n  });//# sourceURL=xmasc-frontend/tests/test-helper.js");
+  alias = computed.alias;
 
-;eval("define(\"xmasc-frontend/tests/unit/adapters/application-test\", \n  [\"ember-qunit\"],\n  function(__dependency1__) {\n    \"use strict\";\n    var moduleFor = __dependency1__.moduleFor;\n    var test = __dependency1__.test;\n    moduleFor(\'adapter:application\', \'ApplicationAdapter\', {});\n\n    test(\'it exists\', function() {\n      var adapter;\n      adapter = this.subject();\n      return ok(adapter);\n    });\n  });//# sourceURL=xmasc-frontend/tests/unit/adapters/application-test.js");
+  reads = computed.reads;
 
-;eval("define(\"xmasc-frontend/tests/unit/controllers/imps-test\", \n  [\"ember-qunit\"],\n  function(__dependency1__) {\n    \"use strict\";\n    var test = __dependency1__.test;\n    var moduleFor = __dependency1__.moduleFor;\n    moduleFor(\'controller:imps\', \'ImpsController\', {});\n\n    test(\'it exists\', function() {\n      var controller;\n      controller = this.subject();\n      return ok(controller);\n    });\n  });//# sourceURL=xmasc-frontend/tests/unit/controllers/imps-test.js");
+  compare = _ember["default"].compare;
 
-;eval("define(\"xmasc-frontend/tests/unit/controllers/index-test\", \n  [\"ember-qunit\"],\n  function(__dependency1__) {\n    \"use strict\";\n    var test = __dependency1__.test;\n    var moduleFor = __dependency1__.moduleFor;\n    moduleFor(\'controller:index\', \'IndexController\', {});\n\n    test(\'it exists\', function() {\n      var controller;\n      controller = this.subject();\n      return ok(controller);\n    });\n  });//# sourceURL=xmasc-frontend/tests/unit/controllers/index-test.js");
+  isEmpty = _ember["default"].isEmpty;
 
-;eval("define(\"xmasc-frontend/tests/unit/models/imp-test\", \n  [\"ember-qunit\"],\n  function(__dependency1__) {\n    \"use strict\";\n    var test = __dependency1__.test;\n    var moduleForModel = __dependency1__.moduleForModel;\n    moduleForModel(\'imp\', \'Imp\', {\n      needs: []\n    });\n\n    test(\'it exists\', function() {\n      var model;\n      model = this.subject();\n      return ok(!!model);\n    });\n  });//# sourceURL=xmasc-frontend/tests/unit/models/imp-test.js");
+  restFor = function (impsKey) {
+    var lengthKey;
+    lengthKey = impsKey + ".length";
+    return computed(lengthKey, function () {
+      return 24 - this.get(lengthKey);
+    });
+  };
 
-;eval("define(\"xmasc-frontend/tests/unit/routes/application-test\", \n  [\"ember-qunit\"],\n  function(__dependency1__) {\n    \"use strict\";\n    var test = __dependency1__.test;\n    var moduleFor = __dependency1__.moduleFor;\n    moduleFor(\'route:application\', \'ApplicationRoute\', {});\n\n    test(\'it exists\', function() {\n      var route;\n      route = this.subject();\n      return ok(route);\n    });\n  });//# sourceURL=xmasc-frontend/tests/unit/routes/application-test.js");
+  compareImpDesc = function (imp1, imp2) {
+    return compare(+get(imp2, "id"), +get(imp1, "id"));
+  };
 
-;eval("define(\"xmasc-frontend/tests/unit/routes/imps-test\", \n  [\"ember-qunit\"],\n  function(__dependency1__) {\n    \"use strict\";\n    var test = __dependency1__.test;\n    var moduleFor = __dependency1__.moduleFor;\n    moduleFor(\'route:imps\', \'ImpsRoute\', {});\n\n    test(\'it exists\', function() {\n      var route;\n      route = this.subject();\n      return ok(route);\n    });\n  });//# sourceURL=xmasc-frontend/tests/unit/routes/imps-test.js");
+  filterImp = function (imp, filter) {
+    return get(imp, "name").match(new RegExp(filter, "i"));
+  };
 
-;eval("define(\"xmasc-frontend/tests/unit/views/imps-test\", \n  [\"ember-qunit\"],\n  function(__dependency1__) {\n    \"use strict\";\n    var test = __dependency1__.test;\n    var moduleFor = __dependency1__.moduleFor;\n    moduleFor(\'view:imps\', \'ImpsView\');\n\n    test(\'it exists\', function() {\n      var view;\n      view = this.subject();\n      return ok(view);\n    });\n  });//# sourceURL=xmasc-frontend/tests/unit/views/imps-test.js");
+  ImpsController = _ember["default"].ArrayController.extend({
+    needs: ["index", "application"],
+    actions: {
+      "add-imp": function addImp() {
+        return this.createImp(this.get("impName"), this.get("impMail"), this.get("impCalendar"));
+      }
+    },
+    displayTime: reads("controllers.index.displayTime"),
+    authenticated: reads("controllers.application.authenticated"),
+    impName: null,
+    impMail: null,
+    impCalendar: null,
+    nameError: alias("errors.name.firstObject"),
+    emailError: alias("errors.email.firstObject"),
+    calendarError: alias("errors.calendar.firstObject"),
+    calendars: CALENDARS,
+    createImp: function createImp(name, mail, calendar) {
+      var imp;
+      imp = this.store.createRecord("imp", {
+        name: name,
+        email: mail,
+        calendar: calendar
+      });
+      return imp.save().then((function (_this) {
+        return function () {
+          return _this.reset();
+        };
+      })(this), (function (_this) {
+        return function (response) {
+          _this.store.unloadRecord(imp);
+          return _this.set("errors", response.errors);
+        };
+      })(this));
+    },
+    reset: function reset() {
+      setProperties(this, {
+        impName: null,
+        impMail: null,
+        impCalendar: null
+      });
+      return this.set("errors", {});
+    },
+    filteredImps: filterBy("content", "isDirty", false),
+    sortedImps: sort("filteredImps", compareImpDesc),
+    imps: (function () {
+      var impFilter, imps;
+      impFilter = this.get("impFilter");
+      imps = this.get("sortedImps");
+      if (impFilter == null) {
+        return imps;
+      } else {
+        return imps.filter(function (imp) {
+          return isEmpty(impFilter) || filterImp(imp, impFilter);
+        });
+      }
+    }).property("impFilter", "sortedImps"),
+    starWarsImps: filterBy("filteredImps", "calendar", CALENDARS[0]),
+    restStarWars: restFor("starWarsImps"),
+    cityImps: filterBy("filteredImps", "calendar", CALENDARS[1]),
+    restCity: restFor("cityImps")
+  });
 
-;eval("define(\"xmasc-frontend/tests/xmasc-frontend/tests/helpers/resolver.jshint\", \n  [],\n  function() {\n    \"use strict\";\n    module(\'JSHint - xmasc-frontend/tests/helpers\');\n    test(\'xmasc-frontend/tests/helpers/resolver.js should pass jshint\', function() { \n      ok(true, \'xmasc-frontend/tests/helpers/resolver.js should pass jshint.\'); \n    });\n  });//# sourceURL=xmasc-frontend/tests/xmasc-frontend/tests/helpers/resolver.jshint.js");
+  exports["default"] = ImpsController;
+});
+define("xmasc-frontend/controllers/index", ["exports", "ember"], function (exports, _ember) {
+  var IndexController, dayMilis, floor, getRestTime, getTimeFrom, hourMilis, minuteMilis, secondMilis;
 
-;eval("define(\"xmasc-frontend/tests/xmasc-frontend/tests/helpers/start-app.jshint\", \n  [],\n  function() {\n    \"use strict\";\n    module(\'JSHint - xmasc-frontend/tests/helpers\');\n    test(\'xmasc-frontend/tests/helpers/start-app.js should pass jshint\', function() { \n      ok(true, \'xmasc-frontend/tests/helpers/start-app.js should pass jshint.\'); \n    });\n  });//# sourceURL=xmasc-frontend/tests/xmasc-frontend/tests/helpers/start-app.jshint.js");
+  getRestTime = function () {
+    return new Date(2014, 11, 1) - new Date();
+  };
 
-;eval("define(\"xmasc-frontend/tests/xmasc-frontend/tests/test-helper.jshint\", \n  [],\n  function() {\n    \"use strict\";\n    module(\'JSHint - xmasc-frontend/tests\');\n    test(\'xmasc-frontend/tests/test-helper.js should pass jshint\', function() { \n      ok(true, \'xmasc-frontend/tests/test-helper.js should pass jshint.\'); \n    });\n  });//# sourceURL=xmasc-frontend/tests/xmasc-frontend/tests/test-helper.jshint.js");
+  floor = Math.floor;
 
-;eval("define(\"xmasc-frontend/views/imps\", \n  [\"ember\",\"exports\"],\n  function(__dependency1__, __exports__) {\n    \"use strict\";\n    var Ember = __dependency1__[\"default\"];\n    var $, ImpsView;\n\n    $ = Ember.$;\n\n    ImpsView = Ember.View.extend({\n      listenForScroll: (function() {\n        var scroll;\n        scroll = (function(_this) {\n          return function() {\n            return _this.set(\"scrollTop\", Ember.$(document).scrollTop());\n          };\n        })(this);\n        return $(document).on(\"scroll\", scroll);\n      }).on(\"didInsertElement\"),\n      magellan: (function() {\n        return this.get(\"scrollTop\") > 352;\n      }).property(\"scrollTop\")\n    });\n\n    __exports__[\"default\"] = ImpsView;\n  });//# sourceURL=xmasc-frontend/views/imps.js");
+  dayMilis = 864e5;
+
+  hourMilis = 36e5;
+
+  minuteMilis = 6e4;
+
+  secondMilis = 1e3;
+
+  getTimeFrom = function (time) {
+    var days, hours, minutes, seconds;
+    days = floor(time / dayMilis);
+    hours = floor(time % dayMilis / hourMilis);
+    minutes = floor(time % hourMilis / minuteMilis);
+    seconds = floor(time % minuteMilis / secondMilis);
+    return "Noch " + days + " Tage " + hours + " Stunden " + minutes + " Minuten " + seconds + " Sekunden";
+  };
+
+  IndexController = _ember["default"].ObjectController.extend({
+    time: getRestTime(),
+    displayTime: (function () {
+      var time;
+      time = this.get("time");
+      if (time > 0) {
+        return getTimeFrom(time);
+      } else {
+        return "Frohe Weihnachten! · Merry Christmas! <br> Chanukah Sameach! · Heri Za Kwanzaa!";
+      }
+    }).property("time"),
+    startTimer: (function () {
+      return setInterval((function (_this) {
+        return function () {
+          return _this.set("time", getRestTime());
+        };
+      })(this), 1000);
+    }).on("init")
+  });
+
+  exports["default"] = IndexController;
+});
+define('xmasc-frontend/controllers/object', ['exports', 'ember'], function (exports, _ember) {
+  exports['default'] = _ember['default'].Controller;
+});
+define('xmasc-frontend/initializers/app-version', ['exports', 'ember-cli-app-version/initializer-factory', 'xmasc-frontend/config/environment'], function (exports, _emberCliAppVersionInitializerFactory, _xmascFrontendConfigEnvironment) {
+  exports['default'] = {
+    name: 'App Version',
+    initialize: (0, _emberCliAppVersionInitializerFactory['default'])(_xmascFrontendConfigEnvironment['default'].APP.name, _xmascFrontendConfigEnvironment['default'].APP.version)
+  };
+});
+define('xmasc-frontend/initializers/export-application-global', ['exports', 'ember', 'xmasc-frontend/config/environment'], function (exports, _ember, _xmascFrontendConfigEnvironment) {
+  exports.initialize = initialize;
+
+  function initialize() {
+    var application = arguments[1] || arguments[0];
+    if (_xmascFrontendConfigEnvironment['default'].exportApplicationGlobal !== false) {
+      var value = _xmascFrontendConfigEnvironment['default'].exportApplicationGlobal;
+      var globalName;
+
+      if (typeof value === 'string') {
+        globalName = value;
+      } else {
+        globalName = _ember['default'].String.classify(_xmascFrontendConfigEnvironment['default'].modulePrefix);
+      }
+
+      if (!window[globalName]) {
+        window[globalName] = application;
+
+        application.reopen({
+          willDestroy: function willDestroy() {
+            this._super.apply(this, arguments);
+            delete window[globalName];
+          }
+        });
+      }
+    }
+  }
+
+  exports['default'] = {
+    name: 'export-application-global',
+
+    initialize: initialize
+  };
+});
+define("xmasc-frontend/models/imp", ["exports", "ember-data"], function (exports, _emberData) {
+  var Imp, attr;
+
+  attr = _emberData["default"].attr;
+
+  Imp = _emberData["default"].Model.extend({
+    name: attr("string"),
+    email: attr("string"),
+    calendar: attr("string"),
+    tuerchen: attr("number")
+  });
+
+  exports["default"] = Imp;
+});
+define('xmasc-frontend/router', ['exports', 'ember', 'xmasc-frontend/config/environment'], function (exports, _ember, _xmascFrontendConfigEnvironment) {
+  var Router;
+
+  Router = _ember['default'].Router.extend({
+    location: _xmascFrontendConfigEnvironment['default'].locationType
+  });
+
+  Router.map(function () {
+    return this.resource("imps");
+  });
+
+  exports['default'] = Router;
+});
+define("xmasc-frontend/routes/application", ["exports", "ember"], function (exports, _ember) {
+  var ApplicationRoute;
+
+  ApplicationRoute = _ember["default"].Route.extend({
+    actions: {
+      authenticate: function authenticate() {
+        var failure, success;
+        success = (function (_this) {
+          return function () {
+            return _this.controller.set("authenticated", true);
+          };
+        })(this);
+        failure = (function (_this) {
+          return function () {
+            return _this.controller.set("authenticated", false);
+          };
+        })(this);
+        return Em.$.getJSON("/authenticate").then(success, failure);
+      }
+    }
+  });
+
+  exports["default"] = ApplicationRoute;
+});
+define("xmasc-frontend/routes/imps", ["exports", "ember"], function (exports, _ember) {
+  var ImpsRoute;
+
+  ImpsRoute = _ember["default"].Route.extend({
+    model: function model() {
+      return this.store.find("imp");
+    }
+  });
+
+  exports["default"] = ImpsRoute;
+});
+define("xmasc-frontend/templates/application", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@1.13.10",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 14,
+            "column": 0
+          }
+        },
+        "moduleName": "xmasc-frontend/templates/application.hbs"
+      },
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("a");
+        dom.setAttribute(el1, "id", "authLink");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1, "class", "wrapper row");
+        var el2 = dom.createTextNode("\n  ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2, "class", "small-11 columns");
+        var el3 = dom.createTextNode("\n  ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("header");
+        dom.setAttribute(el3, "id", "xmascHeader");
+        dom.setAttribute(el3, "class", "row");
+        var el4 = dom.createTextNode("\n    ");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createElement("img");
+        dom.setAttribute(el4, "src", "img/header.jpg");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("\n  ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n  ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1, "class", "wrapper row");
+        var el2 = dom.createTextNode("\n  ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2, "class", "small-11 columns text-center");
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n  ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var element0 = dom.childAt(fragment, [0]);
+        var morphs = new Array(2);
+        morphs[0] = dom.createElementMorph(element0);
+        morphs[1] = dom.createMorphAt(dom.childAt(fragment, [4, 1]), 1, 1);
+        return morphs;
+      },
+      statements: [["element", "action", ["authenticate"], [], ["loc", [null, [1, 3], [1, 28]]]], ["content", "outlet", ["loc", [null, [11, 4], [11, 14]]]]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("xmasc-frontend/templates/countdown", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@1.13.10",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 2,
+            "column": 0
+          }
+        },
+        "moduleName": "xmasc-frontend/templates/countdown.hbs"
+      },
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1, "id", "countdowntimer");
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(1);
+        morphs[0] = dom.createUnsafeMorphAt(dom.childAt(fragment, [0]), 0, 0);
+        return morphs;
+      },
+      statements: [["content", "displayTime", ["loc", [null, [1, 25], [1, 42]]]]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("xmasc-frontend/templates/imp", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template((function () {
+    var child0 = (function () {
+      return {
+        meta: {
+          "revision": "Ember@1.13.10",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 5,
+              "column": 4
+            },
+            "end": {
+              "line": 10,
+              "column": 4
+            }
+          },
+          "moduleName": "xmasc-frontend/templates/imp.hbs"
+        },
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("      ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("div");
+          dom.setAttribute(el1, "class", "tuerchen");
+          var el2 = dom.createTextNode("\n        Türchen\n        ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("div");
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n      ");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1, 1]), 0, 0);
+          return morphs;
+        },
+        statements: [["content", "tuerchen", ["loc", [null, [8, 13], [8, 25]]]]],
+        locals: [],
+        templates: []
+      };
+    })();
+    return {
+      meta: {
+        "revision": "Ember@1.13.10",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 13,
+            "column": 0
+          }
+        },
+        "moduleName": "xmasc-frontend/templates/imp.hbs"
+      },
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("li");
+        var el2 = dom.createTextNode("\n  ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n  ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("small");
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("  ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var element0 = dom.childAt(fragment, [0]);
+        var element1 = dom.childAt(element0, [3]);
+        var morphs = new Array(3);
+        morphs[0] = dom.createMorphAt(element0, 1, 1);
+        morphs[1] = dom.createMorphAt(element1, 1, 1);
+        morphs[2] = dom.createMorphAt(element1, 3, 3);
+        return morphs;
+      },
+      statements: [["content", "name", ["loc", [null, [2, 2], [2, 10]]]], ["content", "calendar", ["loc", [null, [4, 4], [4, 16]]]], ["block", "if", [["get", "tuerchen", ["loc", [null, [5, 10], [5, 18]]]]], [], 0, null, ["loc", [null, [5, 4], [10, 11]]]]],
+      locals: [],
+      templates: [child0]
+    };
+  })());
+});
+define("xmasc-frontend/templates/imps", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template((function () {
+    var child0 = (function () {
+      return {
+        meta: {
+          "revision": "Ember@1.13.10",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 3,
+              "column": 4
+            },
+            "end": {
+              "line": 5,
+              "column": 4
+            }
+          },
+          "moduleName": "xmasc-frontend/templates/imps.hbs"
+        },
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("      ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+          return morphs;
+        },
+        statements: [["inline", "partial", ["countdown"], [], ["loc", [null, [4, 6], [4, 29]]]]],
+        locals: [],
+        templates: []
+      };
+    })();
+    var child1 = (function () {
+      var child0 = (function () {
+        return {
+          meta: {
+            "revision": "Ember@1.13.10",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 9,
+                "column": 12
+              },
+              "end": {
+                "line": 11,
+                "column": 12
+              }
+            },
+            "moduleName": "xmasc-frontend/templates/imps.hbs"
+          },
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("              ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("small");
+            dom.setAttribute(el1, "class", "error");
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var morphs = new Array(1);
+            morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 0, 0);
+            return morphs;
+          },
+          statements: [["content", "calendarError", ["loc", [null, [10, 35], [10, 52]]]]],
+          locals: [],
+          templates: []
+        };
+      })();
+      var child1 = (function () {
+        return {
+          meta: {
+            "revision": "Ember@1.13.10",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 15,
+                "column": 12
+              },
+              "end": {
+                "line": 17,
+                "column": 12
+              }
+            },
+            "moduleName": "xmasc-frontend/templates/imps.hbs"
+          },
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("              ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("small");
+            dom.setAttribute(el1, "class", "error");
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var morphs = new Array(1);
+            morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 0, 0);
+            return morphs;
+          },
+          statements: [["content", "nameError", ["loc", [null, [16, 35], [16, 48]]]]],
+          locals: [],
+          templates: []
+        };
+      })();
+      var child2 = (function () {
+        return {
+          meta: {
+            "revision": "Ember@1.13.10",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 21,
+                "column": 12
+              },
+              "end": {
+                "line": 23,
+                "column": 12
+              }
+            },
+            "moduleName": "xmasc-frontend/templates/imps.hbs"
+          },
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("              ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("small");
+            dom.setAttribute(el1, "class", "error");
+            var el2 = dom.createComment("");
+            dom.appendChild(el1, el2);
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+            var morphs = new Array(1);
+            morphs[0] = dom.createMorphAt(dom.childAt(fragment, [1]), 0, 0);
+            return morphs;
+          },
+          statements: [["content", "emailError", ["loc", [null, [22, 35], [22, 49]]]]],
+          locals: [],
+          templates: []
+        };
+      })();
+      return {
+        meta: {
+          "revision": "Ember@1.13.10",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 5,
+              "column": 4
+            },
+            "end": {
+              "line": 29,
+              "column": 4
+            }
+          },
+          "moduleName": "xmasc-frontend/templates/imps.hbs"
+        },
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("        ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("div");
+          dom.setAttribute(el1, "class", "row collapse prefix-round postfix-round");
+          var el2 = dom.createTextNode("\n          ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("div");
+          dom.setAttribute(el2, "class", "small-3 columns");
+          var el3 = dom.createTextNode("\n            ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("          ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n          ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("div");
+          dom.setAttribute(el2, "class", "small-3 columns");
+          var el3 = dom.createTextNode("\n            ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("          ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n          ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("div");
+          dom.setAttribute(el2, "class", "small-3 columns");
+          var el3 = dom.createTextNode("\n            ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createComment("");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("          ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n          ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("div");
+          dom.setAttribute(el2, "class", "small-2 columns");
+          var el3 = dom.createTextNode("\n            ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("button");
+          dom.setAttribute(el3, "class", "button postfix");
+          var el4 = dom.createTextNode("Pekmez");
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n          ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n        ");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var element1 = dom.childAt(fragment, [1]);
+          var element2 = dom.childAt(element1, [1]);
+          var element3 = dom.childAt(element1, [3]);
+          var element4 = dom.childAt(element1, [5]);
+          var element5 = dom.childAt(element1, [7, 1]);
+          var morphs = new Array(7);
+          morphs[0] = dom.createMorphAt(element2, 1, 1);
+          morphs[1] = dom.createMorphAt(element2, 3, 3);
+          morphs[2] = dom.createMorphAt(element3, 1, 1);
+          morphs[3] = dom.createMorphAt(element3, 3, 3);
+          morphs[4] = dom.createMorphAt(element4, 1, 1);
+          morphs[5] = dom.createMorphAt(element4, 3, 3);
+          morphs[6] = dom.createElementMorph(element5);
+          return morphs;
+        },
+        statements: [["inline", "view", ["select"], ["name", "calendar", "prompt", "Kalender", "value", ["subexpr", "@mut", [["get", "impCalendar", ["loc", [null, [8, 68], [8, 79]]]]], [], []], "content", ["subexpr", "@mut", [["get", "calendars", ["loc", [null, [8, 88], [8, 97]]]]], [], []], "class", ["subexpr", "concat", ["prefix", " ", ["subexpr", "if", [["get", "calendarError", []], "error"], [], []], " "], [], []]], ["loc", [null, [8, 12], [8, 147]]]], ["block", "if", [["get", "calendarError", ["loc", [null, [9, 18], [9, 31]]]]], [], 0, null, ["loc", [null, [9, 12], [11, 19]]]], ["inline", "input", [], ["name", "name", "value", ["subexpr", "@mut", [["get", "impName", ["loc", [null, [14, 38], [14, 45]]]]], [], []], "placeholder", "Name", "class", ["subexpr", "@mut", [["get", "nameError:error", ["loc", [null, [14, 71], [14, 86]]]]], [], []]], ["loc", [null, [14, 12], [14, 88]]]], ["block", "if", [["get", "nameError", ["loc", [null, [15, 18], [15, 27]]]]], [], 1, null, ["loc", [null, [15, 12], [17, 19]]]], ["inline", "input", [], ["name", "email", "value", ["subexpr", "@mut", [["get", "impMail", ["loc", [null, [20, 39], [20, 46]]]]], [], []], "placeholder", "E-Mail", "class", ["subexpr", "@mut", [["get", "emailError:error", ["loc", [null, [20, 74], [20, 90]]]]], [], []]], ["loc", [null, [20, 12], [20, 92]]]], ["block", "if", [["get", "emailError", ["loc", [null, [21, 18], [21, 28]]]]], [], 2, null, ["loc", [null, [21, 12], [23, 19]]]], ["element", "action", ["add-imp"], [], ["loc", [null, [26, 20], [26, 40]]]]],
+        locals: [],
+        templates: [child0, child1, child2]
+      };
+    })();
+    var child2 = (function () {
+      return {
+        meta: {
+          "revision": "Ember@1.13.10",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 33,
+              "column": 0
+            },
+            "end": {
+              "line": 40,
+              "column": 0
+            }
+          },
+          "moduleName": "xmasc-frontend/templates/imps.hbs"
+        },
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("  ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("div");
+          dom.setAttribute(el1, "class", "row");
+          var el2 = dom.createTextNode("\n    ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("div");
+          dom.setAttribute(el2, "class", "small-11 columns text-center");
+          var el3 = dom.createTextNode("\n      Türchen vergeben: ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("em");
+          var el4 = dom.createComment("");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createTextNode("/48");
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("br");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n      Lego Star Wars: ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("em");
+          var el4 = dom.createComment("");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createTextNode(" Türchen übrig");
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode(" · Lego City: ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("em");
+          var el4 = dom.createComment("");
+          dom.appendChild(el3, el4);
+          var el4 = dom.createTextNode(" Türchen übrig");
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n    ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n  ");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var element0 = dom.childAt(fragment, [1, 1]);
+          var morphs = new Array(3);
+          morphs[0] = dom.createMorphAt(dom.childAt(element0, [1]), 0, 0);
+          morphs[1] = dom.createMorphAt(dom.childAt(element0, [4]), 0, 0);
+          morphs[2] = dom.createMorphAt(dom.childAt(element0, [6]), 0, 0);
+          return morphs;
+        },
+        statements: [["content", "imps.length", ["loc", [null, [36, 28], [36, 43]]]], ["content", "restStarWars", ["loc", [null, [37, 26], [37, 42]]]], ["content", "restCity", ["loc", [null, [37, 86], [37, 98]]]]],
+        locals: [],
+        templates: []
+      };
+    })();
+    var child3 = (function () {
+      return {
+        meta: {
+          "revision": "Ember@1.13.10",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 46,
+              "column": 6
+            },
+            "end": {
+              "line": 48,
+              "column": 6
+            }
+          },
+          "moduleName": "xmasc-frontend/templates/imps.hbs"
+        },
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("        ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(fragment, 1, 1, contextualElement);
+          return morphs;
+        },
+        statements: [["inline", "partial", ["imp"], [], ["loc", [null, [47, 8], [47, 25]]]]],
+        locals: [],
+        templates: []
+      };
+    })();
+    var child4 = (function () {
+      var child0 = (function () {
+        return {
+          meta: {
+            "revision": "Ember@1.13.10",
+            "loc": {
+              "source": null,
+              "start": {
+                "line": 49,
+                "column": 8
+              },
+              "end": {
+                "line": 51,
+                "column": 8
+              }
+            },
+            "moduleName": "xmasc-frontend/templates/imps.hbs"
+          },
+          arity: 0,
+          cachedFragment: null,
+          hasRendered: false,
+          buildFragment: function buildFragment(dom) {
+            var el0 = dom.createDocumentFragment();
+            var el1 = dom.createTextNode("          ");
+            dom.appendChild(el0, el1);
+            var el1 = dom.createElement("li");
+            dom.setAttribute(el1, "class", "empty");
+            var el2 = dom.createElement("em");
+            var el3 = dom.createTextNode("Noch keine Teilnehmer vorhanden. Sei der Erste!");
+            dom.appendChild(el2, el3);
+            dom.appendChild(el1, el2);
+            dom.appendChild(el0, el1);
+            var el1 = dom.createTextNode("\n");
+            dom.appendChild(el0, el1);
+            return el0;
+          },
+          buildRenderNodes: function buildRenderNodes() {
+            return [];
+          },
+          statements: [],
+          locals: [],
+          templates: []
+        };
+      })();
+      return {
+        meta: {
+          "revision": "Ember@1.13.10",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 48,
+              "column": 6
+            },
+            "end": {
+              "line": 52,
+              "column": 6
+            }
+          },
+          "moduleName": "xmasc-frontend/templates/imps.hbs"
+        },
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createComment("");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var morphs = new Array(1);
+          morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+          dom.insertBoundary(fragment, 0);
+          dom.insertBoundary(fragment, null);
+          return morphs;
+        },
+        statements: [["block", "if", [["get", "authenticated", ["loc", [null, [49, 14], [49, 27]]]]], [], 0, null, ["loc", [null, [49, 8], [51, 15]]]]],
+        locals: [],
+        templates: [child0]
+      };
+    })();
+    return {
+      meta: {
+        "revision": "Ember@1.13.10",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 56,
+            "column": 0
+          }
+        },
+        "moduleName": "xmasc-frontend/templates/imps.hbs"
+      },
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1, "class", "magellan-wrapper");
+        var el2 = dom.createTextNode("\n  ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("form");
+        dom.setAttribute(el2, "id", "impForm");
+        var el3 = dom.createTextNode("\n");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("  ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("section");
+        dom.setAttribute(el1, "class", "row");
+        var el2 = dom.createTextNode("\n  ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createElement("div");
+        dom.setAttribute(el2, "class", "small-11 columns");
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createComment("");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n    ");
+        dom.appendChild(el2, el3);
+        var el3 = dom.createElement("ul");
+        dom.setAttribute(el3, "class", "imps");
+        var el4 = dom.createTextNode("\n");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createComment("");
+        dom.appendChild(el3, el4);
+        var el4 = dom.createTextNode("    ");
+        dom.appendChild(el3, el4);
+        dom.appendChild(el2, el3);
+        var el3 = dom.createTextNode("\n  ");
+        dom.appendChild(el2, el3);
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var element6 = dom.childAt(fragment, [0, 1]);
+        var element7 = dom.childAt(fragment, [4, 1]);
+        var morphs = new Array(5);
+        morphs[0] = dom.createAttrMorph(element6, 'class');
+        morphs[1] = dom.createMorphAt(element6, 1, 1);
+        morphs[2] = dom.createMorphAt(fragment, 2, 2, contextualElement);
+        morphs[3] = dom.createMorphAt(element7, 1, 1);
+        morphs[4] = dom.createMorphAt(dom.childAt(element7, [3]), 1, 1);
+        return morphs;
+      },
+      statements: [["attribute", "class", ["concat", [["subexpr", "-bind-attr-class", [["get", "view.magellan", []], "magellan"], [], []]]]], ["block", "unless", [["get", "authenticated", ["loc", [null, [3, 14], [3, 27]]]]], [], 0, 1, ["loc", [null, [3, 4], [29, 15]]]], ["block", "if", [["get", "authenticated", ["loc", [null, [33, 6], [33, 19]]]]], [], 2, null, ["loc", [null, [33, 0], [40, 7]]]], ["inline", "input", [], ["value", ["subexpr", "@mut", [["get", "impFilter", ["loc", [null, [44, 18], [44, 27]]]]], [], []], "placeholder", "Suche Wichtel"], ["loc", [null, [44, 4], [44, 57]]]], ["block", "each", [["get", "imps", ["loc", [null, [46, 14], [46, 18]]]]], [], 3, 4, ["loc", [null, [46, 6], [52, 15]]]]],
+      locals: [],
+      templates: [child0, child1, child2, child3, child4]
+    };
+  })());
+});
+define("xmasc-frontend/templates/index", ["exports"], function (exports) {
+  exports["default"] = Ember.HTMLBars.template((function () {
+    return {
+      meta: {
+        "revision": "Ember@1.13.10",
+        "loc": {
+          "source": null,
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 5,
+            "column": 0
+          }
+        },
+        "moduleName": "xmasc-frontend/templates/index.hbs"
+      },
+      arity: 0,
+      cachedFragment: null,
+      hasRendered: false,
+      buildFragment: function buildFragment(dom) {
+        var el0 = dom.createDocumentFragment();
+        var el1 = dom.createComment("");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        var el1 = dom.createElement("div");
+        dom.setAttribute(el1, "class", "text-center");
+        var el2 = dom.createTextNode("\n  ");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createComment("");
+        dom.appendChild(el1, el2);
+        var el2 = dom.createTextNode("\n");
+        dom.appendChild(el1, el2);
+        dom.appendChild(el0, el1);
+        var el1 = dom.createTextNode("\n");
+        dom.appendChild(el0, el1);
+        return el0;
+      },
+      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+        var morphs = new Array(2);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        morphs[1] = dom.createMorphAt(dom.childAt(fragment, [2]), 1, 1);
+        dom.insertBoundary(fragment, 0);
+        return morphs;
+      },
+      statements: [["inline", "partial", ["countdown"], [], ["loc", [null, [1, 0], [1, 23]]]], ["inline", "link-to", ["Hier gehts zur Wichtelliste", "imps"], [], ["loc", [null, [3, 2], [3, 50]]]]],
+      locals: [],
+      templates: []
+    };
+  })());
+});
+define("xmasc-frontend/views/imps", ["exports", "ember"], function (exports, _ember) {
+  var $, ImpsView;
+
+  $ = _ember["default"].$;
+
+  ImpsView = _ember["default"].View.extend({
+    listenForScroll: (function () {
+      var scroll;
+      scroll = (function (_this) {
+        return function () {
+          return _this.set("scrollTop", _ember["default"].$(document).scrollTop());
+        };
+      })(this);
+      return $(document).on("scroll", scroll);
+    }).on("didInsertElement"),
+    magellan: (function () {
+      return this.get("scrollTop") > 352;
+    }).property("scrollTop")
+  });
+
+  exports["default"] = ImpsView;
+});
+/* jshint ignore:start */
+
+/* jshint ignore:end */
 
 /* jshint ignore:start */
 
@@ -77,13 +1214,11 @@ catch(err) {
 
 /* jshint ignore:end */
 
-
 });
 
-if (runningTests) {
-  require('xmasc-frontend/tests/test-helper');
-} else {
-  require('xmasc-frontend/app')['default'].create({"LOG_ACTIVE_GENERATION":true,"LOG_VIEW_LOOKUPS":true});
+if (!runningTests) {
+  require("xmasc-frontend/app")["default"].create({"LOG_ACTIVE_GENERATION":true,"LOG_VIEW_LOOKUPS":true,"name":"xmasc-frontend","version":"0.0.0+62e5cf5a"});
 }
 
 /* jshint ignore:end */
+//# sourceMappingURL=xmasc-frontend.map
