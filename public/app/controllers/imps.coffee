@@ -1,6 +1,6 @@
 `import Ember from 'ember'`
 
-CALENDARS = ["Lego Star Wars", "Lego City"]
+CALENDARS = ["Lego Star Wars", "Ü-Ei"]
 
 get = Ember.get
 setProperties = Ember.setProperties
@@ -42,6 +42,9 @@ ImpsController = Ember.ArrayController.extend
   calendarError: alias "errors.calendar.firstObject"
 
   calendars: CALENDARS
+
+  starWarsName: CALENDARS[0],
+  cityName: CALENDARS[1],
 
   createImp: (name, mail, calendar) ->
     imp = @store.createRecord "imp", name: name, email: mail, calendar: calendar
