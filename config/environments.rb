@@ -31,16 +31,7 @@ configure :production do
     :encoding => 'utf8'
   )
 
-  ActionMailer::Base.smtp_settings = {
-    :port           => '25',
-    :address        => ENV['POSTMARK_SMTP_SERVER'],
-    :user_name      => ENV['POSTMARK_API_KEY'],
-    :password       => ENV['POSTMARK_API_KEY'],
-    :domain         => 'xmasc.herokuapp.com',
-    :authentication => :plain,
-    :enable_starttls_auto => false
-  }
-  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.delivery_method = :sendmail
 end
 
 configure :test do
