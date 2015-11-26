@@ -1,4 +1,4 @@
-bind "tcp://0.0.0.0:9292"
+bind "tcp://127.0.0.1:9292"
 environment "development"
 daemonize true
 
