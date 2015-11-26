@@ -17,8 +17,10 @@ class Roller
     for calendar in [STARWARS, CITY]
       imps = imp_calendars[calendar]
 
-      for imp in imps
-        make_tuerchen_for imp, calendars[calendar]
+      unless imps.nil?
+        for imp in imps
+          make_tuerchen_for imp, calendars[calendar]
+        end
       end
 
     end
