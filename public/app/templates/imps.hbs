@@ -1,11 +1,17 @@
 <div class="magellan-wrapper">
-  <form id="impForm" {{bind-attr class="view.magellan"}}>
+  {{#imp-form}}
     {{#unless authenticated}}
       {{partial "countdown"}}
     {{else}}
         <div class="row collapse prefix-round postfix-round">
           <div class="small-3 columns">
-            {{view "select" name="calendar" prompt="Kalender" value=impCalendar content=calendars classNameBindings=":prefix calendarError:error"}}
+            {{#x-select value=impCalendar classNames="prefix"}}
+              <option>Kalender</option>
+
+              {{#each calendars as |calendar|}}
+                {{#x-option value=calendar}}{{calendar}}{{/x-option}}
+              {{/each}}
+            {{/x-select}}
             {{#if calendarError}}
               <small class="error">{{calendarError}}</small>
             {{/if}}
@@ -27,7 +33,7 @@
           </div>
         </div>
     {{/unless}}
-  </form>
+  {{/imp-form}}
 </div>
 
 {{#if authenticated}}
@@ -43,8 +49,19 @@
   <div class="small-11 columns">
     {{input value=impFilter placeholder="Suche Wichtel"}}
     <ul class="imps">
-      {{#each imps}}
-        {{partial "imp"}}
+      {{#each imps as |imp|}}
+        <li>
+          {{imp.name}}
+          <small>
+            {{imp.calendar}}
+            {{#if imp.tuerchen}}
+              <div class="tuerchen">
+                Türchen
+                <div>{{imp.tuerchen}}</div>
+              </div>
+            {{/if}}
+          </small>
+        </li>
       {{else}}
         {{#if authenticated}}
           <li class="empty"><em>Noch keine Teilnehmer vorhanden. Sei der Erste!</em></li>

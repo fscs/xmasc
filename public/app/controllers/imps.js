@@ -6,6 +6,7 @@ const {
   compare,
   computed,
   get,
+  inject,
   isEmpty,
   setProperties
 } = Ember;
@@ -28,8 +29,10 @@ function filterImp(imp, filter) {
   get(imp, "name").match(new RegExp(filter, "i"));
 }
 
-export default Ember.ArrayController.extend({
-  needs: ["index", "application"],
+export default Ember.Controller.extend({
+  application: inject.controller(),
+
+  index: inject.controller(),
 
   actions: {
     "add-imp": function() {
@@ -37,9 +40,9 @@ export default Ember.ArrayController.extend({
     }
   },
 
-  displayTime: reads("controllers.index.displayTime"),
+  displayTime: reads("index.displayTime"),
 
-  authenticated: reads("controllers.application.authenticated"),
+  authenticated: reads("application.authenticated"),
 
   impName: null,
   impMail: null,
@@ -73,7 +76,7 @@ export default Ember.ArrayController.extend({
     this.set("errors", {});
   },
 
-  filteredImps: filterBy("content", "isDirty", false),
+  filteredImps: filterBy("model", "hasDirtyAttributes", false),
 
   sortedImps: sort("filteredImps", compareImpDesc),
 
