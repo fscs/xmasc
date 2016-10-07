@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20141130120529) do
 
-  create_table "imps", force: true do |t|
+  create_table "imps", force: :cascade do |t|
     t.string  "name"
     t.string  "email"
     t.string  "calendar"

@@ -1,10 +1,12 @@
 source "https://rubygems.org"
 
-gem "sinatra"
+gem "sinatra", "1.4.7"
 gem "activerecord"
 gem "sinatra-activerecord"
 gem "actionmailer"
 gem "puma"
+
+gem "rake"
 
 group :development, :test do
   gem "sqlite3"
