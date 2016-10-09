@@ -15,6 +15,10 @@ export default Ember.Component.extend({
     $(document).on("scroll", () => this.set("scrollTop", Ember.$(document).scrollTop()));
   }),
 
+  stopListenForScroll: on("willDestroyElement", function() {
+    $(document).off("scroll");
+  }),
+
   magellan: computed("scrollTop", function() {
     return this.get("scrollTop") > 352;
   })

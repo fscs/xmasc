@@ -42,6 +42,11 @@ export default Ember.Controller.extend({
   }),
 
   startTimer: on("init", function() {
-    setInterval(() => this.set("time", getRestTime()), 1000);
-  })
+    this.set("_interval", setInterval(() => this.set("time", getRestTime()), 1000));
+  }),
+
+  willDestroy() {
+    this._super();
+    clearInterval(this.get("_interval"));
+  }
 });

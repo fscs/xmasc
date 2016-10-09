@@ -1,25 +1,16 @@
-import { moduleForComponent, test } from 'ember-qunit';
-import hbs from 'htmlbars-inline-precompile';
+import { moduleForComponent, test } from "ember-qunit";
+import hbs from "htmlbars-inline-precompile";
 
-moduleForComponent('imp-form', 'Integration | Component | imp form', {
+moduleForComponent("imp-form", "Integration | Component | imp form", {
   integration: true
 });
 
-test('it renders', function(assert) {
-  
-  // Set any properties with this.set('myProperty', 'value');
-  // Handle any actions with this.on('myAction', function(val) { ... });" + EOL + EOL +
+test("it renders", function(assert) {
+
+  // Set any properties with this.set("myProperty", "value");
+  // Handle any actions with this.on("myAction", function(val) { ... });" + EOL + EOL +
 
   this.render(hbs`{{imp-form}}`);
 
-  assert.equal(this.$().text().trim(), '');
-
-  // Template block usage:" + EOL +
-  this.render(hbs`
-    {{#imp-form}}
-      template block text
-    {{/imp-form}}
-  `);
-
-  assert.equal(this.$().text().trim(), 'template block text');
+  assert.equal(this.$().text().trim(), "");
 });
