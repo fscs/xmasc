@@ -3,7 +3,7 @@ require 'pry'
 
 describe Roller do
   before do
-    48.times do
+    72.times do
       imp = build :random_imp
       until imp.valid?
         imp.calendar = ["Lego Star Wars", "Lego City", nil].sample
@@ -19,10 +19,12 @@ describe Roller do
     map = Proc.new { |imp| imp.tuerchen }
 
     star_wars = imp_calendars["Lego Star Wars"].map &map
-    city = imp_calendars["Lego City"].map &map
+    city = imp_calendars["Lego Hotwheels"].map &map
+    barbie = imp_calendars["Lego Barbie"].map &map
 
     expect(star_wars).to match_array (1..24).to_a
     expect(city).to match_array (1..24).to_a
+    expect(barbie).to match_array (1..24).to_a
     expect(imp_calendars[nil]).to be_nil
 
   end
