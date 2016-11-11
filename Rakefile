@@ -20,7 +20,7 @@ namespace :xmasc do
   task :mail do
     Imp.all.each do |imp|
       mail = ImpMailer.tuerchen imp.name, imp.email, imp.calendar, imp.tuerchen
-      if mail.deliver
+      if mail.deliver_now
         puts "Mail an #{imp.name} (#{imp.email}) versandt"
       else
         puts "Mailversand an #{imp.name} (#{imp.email}) fehlgeschlagen"

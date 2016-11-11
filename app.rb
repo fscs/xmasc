@@ -41,5 +41,5 @@ get '/authenticate' do
 end
 
 def send_welcome_mail_to imp
-  ImpMailer.welcome(imp.name, imp.email).deliver
+  ImpMailer.welcome(imp.name, imp.email).deliver_now
 end
