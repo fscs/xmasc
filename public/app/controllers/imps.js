@@ -26,7 +26,7 @@ function compareImpDesc(imp1, imp2) {
 }
 
 function filterImp(imp, filter) {
-  get(imp, "name").match(new RegExp(filter, "i"));
+  return get(imp, "name").match(new RegExp(filter, "i"));
 }
 
 export default Ember.Controller.extend({
