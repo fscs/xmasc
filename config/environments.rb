@@ -7,12 +7,6 @@ configure :development, :production do
 end
 
 configure :development do
-  config = YAML.load_file('config/database.yml')["development"]
-  ActiveRecord::Base.establish_connection(
-    adapter: config["adapter"],
-    database: config["database"]
-  )
-
   ActionMailer::Base.delivery_method = :file
   ActionMailer::Base.file_settings = {
     location: File.join(Sinatra::Application.root, "tmp/mails")
@@ -26,12 +20,4 @@ configure :production do
     user_name: ENV["XMASC_SMTP_USERNAME"],
     password: ENV["XMASC_SMTP_PASSWORD"]
   }
-end
-
-configure :test do
-  config = YAML.load_file('config/database.yml')["test"]
-  ActiveRecord::Base.establish_connection(
-    adapter: config["adapter"],
-    database: config["database"]
-  )
 end

@@ -1,9 +1,9 @@
+ENV['RACK_ENV'] ||= 'test'
+
 require './app'
 require 'rspec'
 require 'rack/test'
 require 'factory_girl'
-
-ENV['RACK_ENV'] ||= 'test'
 
 Dir[File.join(Sinatra::Application.root, "spec/support/**/*.rb")].each { |f| require f }
 
