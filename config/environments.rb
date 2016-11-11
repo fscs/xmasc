@@ -20,7 +20,12 @@ configure :development do
 end
 
 configure :production do
-  ActionMailer::Base.delivery_method = :sendmail
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+    address: ENV["XMASC_SMTP_HOST"],
+    user_name: ENV["XMASC_SMTP_USERNAME"],
+    password: ENV["XMASC_SMTP_PASSWORD"]
+  }
 end
 
 configure :test do

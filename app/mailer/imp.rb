@@ -1,6 +1,6 @@
 class ImpMailer < ActionMailer::Base
   default subject: "Weihnachtskalender FSCS #{Date.today.strftime("%Y")}",
-    from: "fscs@uni-duesseldorf.de"
+    from: "Weihnachtsrat <fscs@hhu.de>"
 
   def welcome(name, email)
     @imp = name
