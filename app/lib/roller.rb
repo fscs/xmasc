@@ -1,25 +1,29 @@
 STARWARS = "Lego Star Wars"
-CITY = "Ü-Ei"
+CITY = "Lego Hotwheels"
+BARBIE = "Lego Barbie"
+CALENDARS = [STARWARS, CITY, BARBIE]
 TUERCHEN = 24
+
+CALENDAR_TUERCHEN = {
+  "#{STARWARS}" => (1..TUERCHEN).to_a,
+  "#{CITY}" => (1..TUERCHEN).to_a,
+  "#{BARBIE}" => (1..TUERCHEN).to_a
+}
+
 
 class Roller
 
   def self.roll
-    calendars = {
-      "#{STARWARS}" => (1..TUERCHEN).to_a,
-      "#{CITY}" => (1..TUERCHEN).to_a
-    }
-
     Imp.all.update_all tuerchen: nil
     imp_calendars = Imp.all.group_by { |imp| imp.calendar }
 
     # roll_fixed_calendars
-    for calendar in [STARWARS, CITY]
+    for calendar in CALENDARS
       imps = imp_calendars[calendar]
 
       unless imps.nil?
         for imp in imps
-          make_tuerchen_for imp, calendars[calendar]
+          make_tuerchen_for imp, CALENDAR_TUERCHEN[calendar]
         end
       end
 
@@ -28,10 +32,10 @@ class Roller
 
     if imp_calendars[nil]
       for imp in imp_calendars[nil]
-        calendar = get_random_calendar_from(calendars)
+        calendar = get_random_calendar_from(CALENDAR_TUERCHEN)
         imp.calendar = calendar
         imp.save
-        make_tuerchen_for imp, calendars[calendar]
+        make_tuerchen_for imp, CALENDAR_TUERCHEN[calendar]
       end
     end
   end

@@ -38,9 +38,13 @@
 
 {{#if authenticated}}
   <div class="row">
-    <div class="small-11 columns text-center">
+    <div class="small-11 columns">
       Türchen vergeben: <em>{{imps.length}}/48</em><br>
-      {{starWarsName}}: <em>{{restStarWars}} Türchen übrig</em> &middot; {{cityName}}: <em>{{restCity}} Türchen übrig</em>
+      <ul>
+        <li>{{starWarsName}}: <em>{{restStarWars}} Türchen übrig</em></li>
+        <li>{{cityName}}: <em>{{restCity}} Türchen übrig</em></li>
+        <li>{{barbieName}}: <em>{{restBarbie}} Türchen übrig</em></li>
+      </ul>
     </div>
   </div>
 {{/if}}

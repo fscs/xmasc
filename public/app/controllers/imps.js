@@ -1,6 +1,6 @@
 import Ember from "ember";
 
-const CALENDARS = ["Lego Star Wars", "Ü-Ei"];
+const CALENDARS = ["Lego Star Wars", "Lego Hotwheels", "Lego Barbie"];
 
 const {
   compare,
@@ -22,7 +22,7 @@ function restFor(impsKey) {
 }
 
 function compareImpDesc(imp1, imp2) {
- return compare(+get(imp2, "id"), +get(imp1, "id"));
+  return compare(+get(imp2, "id"), +get(imp1, "id"));
 }
 
 function filterImp(imp, filter) {
@@ -56,6 +56,7 @@ export default Ember.Controller.extend({
 
   starWarsName: CALENDARS[0],
   cityName: CALENDARS[1],
+  barbieName: CALENDARS[2],
 
   createImp(name, mail, calendar) {
     const imp = this.store.createRecord("imp", {name, email: mail, calendar});
@@ -95,5 +96,8 @@ export default Ember.Controller.extend({
   restStarWars: restFor("starWarsImps"),
 
   cityImps: filterBy("filteredImps", "calendar", CALENDARS[1]),
-  restCity: restFor("cityImps")
+  restCity: restFor("cityImps"),
+
+  barbieImps: filterBy("filteredImps", "calendar", CALENDARS[2]),
+  restBarbie: restFor("barbieImps")
 });
