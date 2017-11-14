@@ -1,0 +1,7 @@
+app:
+  build: .
+  ports:
+    - "9292:9292"
+  volumes:
+    - ./var:/app/var
+  env_file: .env

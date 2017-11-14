@@ -1,6 +1,6 @@
-bind "tcp://127.0.0.1:9292"
+bind "tcp://0.0.0.0:9292"
 environment "production"
-daemonize true
+daemonize false
 
 stdout_redirect 'log/production.log', 'log/production.log', true
 
