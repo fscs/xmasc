@@ -1,7 +1,7 @@
 require 'faker'
 require './app/models/imp'
 
-calendars = ["Lego Star Wars", "Lego Hot Wheels", "Lego Barbie", nil]
+calendars = ["Star Wars", "Ü--Ei", "Bierkalender", nil]
 
 72.times do
   Imp.create name: Faker::Name.name, email: Faker::Internet.email,

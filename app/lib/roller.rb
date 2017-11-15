@@ -1,6 +1,6 @@
-STARWARS = "Lego Star Wars"
-CITY = "Lego Hotwheels"
-BARBIE = "Lego Barbie"
+STARWARS = "Star Wars"
+CITY = "Ü-Ei"
+BARBIE = "Bierkalender"
 CALENDARS = [STARWARS, CITY, BARBIE]
 TUERCHEN = 24
 

@@ -1,6 +1,6 @@
 import Ember from "ember";
 
-const CALENDARS = ["Lego Star Wars", "Lego Hotwheels", "Lego Barbie"];
+const CALENDARS = ["Star Wars", "Ü-Ei", "Bierkalender"];
 
 const {
   compare,
