@@ -1,7 +1,11 @@
-app:
-  build: .
-  ports:
-    - "9292:9292"
-  volumes:
-    - ./var:/app/var
-  env_file: .env
+version: '3'
+
+services:
+  app:
+    build: .
+    image: xmasc
+    ports:
+      - "9292:9292"
+    volumes:
+      - ./var:/app/var
+    env_file: .env
